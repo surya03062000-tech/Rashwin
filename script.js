@@ -1,100 +1,75 @@
 /* =========================================================
-   Sajil ❤️ Jino — Wedding Invitation · interactions  v2
+   Sajil ❤️ Jino — Wedding Invitation · interactions  v3
+   3D gate · synth Christian music · add-to-calendar ·
+   save-the-date share · Tamil · gallery · wishes
    ========================================================= */
 (function () {
   "use strict";
 
   /* ----- Config ----- */
   const WEDDING_DATE  = new Date("2026-07-02T10:30:00+05:30");
-  const HOST_WHATSAPP = "919876543210";
   const SITE_URL      = window.location.href;
   const VENUE_QUERY   = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
+  const VENUE_FULL    = "Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil, Tamil Nadu";
 
-  const $  = (s, ctx = document) => ctx.querySelector(s);
-  const $$ = (s, ctx = document) => Array.from(ctx.querySelectorAll(s));
+  const $  = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
 
   /* =========================================================
-     LOADER  →  show for 1.4 s then reveal gate
+     LOADER
      ========================================================= */
   window.addEventListener("load", () => {
-    setTimeout(() => {
-      $("#loader").classList.add("hide");
-    }, 1400);
+    setTimeout(() => $("#loader").classList.add("hide"), 1400);
   });
 
   /* =========================================================
-     GATE  —  cinematic double-door opening
+     GATE — 3D doors + sparkle burst
      ========================================================= */
-  const gate     = $("#gate");
-  const gateCard = $("#gateCard");
-  const openBtn  = $("#openInvite");
+  const gate    = $("#gate");
+  const openBtn = $("#openInvite");
 
-  /* Stagger-in the card text lines on load */
-  const gateLines = [".gate-pre",".gate-names",".gate-verse",".gate-date",".gate-venue",".gate-btn"];
-  gateLines.forEach((sel, i) => {
-    const el = $(sel, gate);
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(16px)";
-    el.style.transition = `opacity .55s ease ${.55 + i * .12}s, transform .55s ease ${.55 + i * .12}s`;
-    /* trigger reflow then animate in */
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-    }));
-  });
+  /* stagger-in the card lines */
+  [".gate-seal",".gate-pre",".gate-pre2",".gate-names",".gate-verse",".gate-date",".gate-venue",".gate-btn"]
+    .forEach((sel, i) => {
+      const el = $(sel, gate);
+      if (!el) return;
+      el.style.opacity = "0";
+      el.style.transform = "translateY(16px)";
+      el.style.transition = `opacity .55s ease ${.5 + i * .1}s, transform .55s ease ${.5 + i * .1}s`;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.opacity = "1"; el.style.transform = "translateY(0)";
+      }));
+    });
 
-  openBtn.addEventListener("click", (e) => {
-    /* 1. Burst golden sparkles from button center */
-    const rect = openBtn.getBoundingClientRect();
-    const cx   = rect.left + rect.width  / 2;
-    const cy   = rect.top  + rect.height / 2;
-    burstSparkles(cx, cy);
-
-    /* 2. Slide doors apart */
+  openBtn.addEventListener("click", () => {
+    const r = openBtn.getBoundingClientRect();
+    burstSparkles(r.left + r.width / 2, r.top + r.height / 2);
     gate.classList.add("opening");
-
-    /* 3. Try to play music on this user gesture */
-    tryPlayMusic();
-
-    /* 4. Hide gate after animation completes */
+    Music.start();                 // begin music on user gesture
     setTimeout(() => {
       gate.classList.add("hide");
       setTimeout(() => { gate.style.display = "none"; }, 600);
-    }, 1250);
+    }, 1350);
   });
 
-  /* ----- Golden sparkle burst ----- */
   function burstSparkles(cx, cy) {
-    const colors  = ["#e6c66b","#c9a227","#f8e4a0","#ffffff","#e8b4b8","#fff3d0"];
-    const shapes  = ["●","★","✦","✧","•","◆"];
-    const count   = window.matchMedia("(prefers-reduced-motion:reduce)").matches ? 0 : 38;
-
-    for (let i = 0; i < count; i++) {
+    if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const colors = ["#e6c66b","#c9a227","#f8e4a0","#ffffff","#e8b4b8","#fff3d0"];
+    const shapes = ["●","★","✦","✧","•","◆","❀"];
+    for (let i = 0; i < 44; i++) {
       const el = document.createElement("span");
-      el.style.cssText = `
-        position:fixed; z-index:10000; pointer-events:none;
-        left:${cx}px; top:${cy}px;
-        font-size:${6 + Math.random() * 12}px;
-        color:${colors[Math.floor(Math.random() * colors.length)]};
-        user-select:none; will-change:transform,opacity;
-      `;
-      el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+      el.style.cssText =
+        `position:fixed;z-index:10000;pointer-events:none;left:${cx}px;top:${cy}px;` +
+        `font-size:${6 + Math.random() * 13}px;color:${colors[(Math.random()*colors.length)|0]};` +
+        `user-select:none;will-change:transform,opacity;`;
+      el.textContent = shapes[(Math.random() * shapes.length) | 0];
       document.body.appendChild(el);
-
-      const angle = Math.random() * Math.PI * 2;
-      const dist  = 80  + Math.random() * 220;
-      const dur   = 700 + Math.random() * 700;
-
-      const tx = Math.cos(angle) * dist;
-      const ty = Math.sin(angle) * dist;
-
+      const a = Math.random() * Math.PI * 2;
+      const d = 90 + Math.random() * 240;
       el.animate(
-        [
-          { transform: "translate(-50%,-50%) scale(1)",    opacity: 1 },
-          { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
-        ],
-        { duration: dur, easing: "cubic-bezier(0,.9,.57,1)", fill: "forwards" }
+        [{ transform: "translate(-50%,-50%) scale(1) rotate(0)", opacity: 1 },
+         { transform: `translate(calc(-50% + ${Math.cos(a)*d}px),calc(-50% + ${Math.sin(a)*d}px)) scale(0) rotate(${(Math.random()*540-270)|0}deg)`, opacity: 0 }],
+        { duration: 750 + Math.random() * 750, easing: "cubic-bezier(0,.9,.57,1)", fill: "forwards" }
       ).onfinish = () => el.remove();
     }
   }
@@ -102,22 +77,21 @@
   /* =========================================================
      FLOATING PETALS
      ========================================================= */
-  (function spawnPetals() {
+  (function () {
     const wrap   = $("#petals");
     const glyphs = ["❀","✿","❁","🌸","❋","✾"];
     const colors = ["#e8b4b8","#c9a227","#c98a92","#e6c66b","#fff","#f3d2d5"];
     const count  = window.innerWidth < 600 ? 12 : 22;
-
     for (let i = 0; i < count; i++) {
       const p = document.createElement("span");
       p.className = "petal";
       p.textContent = glyphs[i % glyphs.length];
-      p.style.left  = Math.random() * 100 + "vw";
+      p.style.left = Math.random() * 100 + "vw";
       p.style.fontSize = 12 + Math.random() * 16 + "px";
-      p.style.color    = colors[Math.floor(Math.random() * colors.length)];
+      p.style.color = colors[(Math.random() * colors.length) | 0];
       const dur = 9 + Math.random() * 12;
       p.style.animationDuration = dur + "s";
-      p.style.animationDelay   = -Math.random() * dur + "s";
+      p.style.animationDelay = -Math.random() * dur + "s";
       wrap.appendChild(p);
     }
   })();
@@ -125,289 +99,257 @@
   /* =========================================================
      NAVIGATION
      ========================================================= */
-  const nav      = $("#nav");
-  const burger   = $("#navBurger");
-  const navClose = $("#navClose");
-  const menu     = $("#navMenu");
-  const overlay  = $("#navOverlay");
-
-  function openMenu() {
-    menu.classList.add("open");
-    burger.classList.add("open");
-    burger.setAttribute("aria-expanded", "true");
-    overlay.classList.add("show");
-    document.body.style.overflow = "hidden";
-  }
-  function closeMenu() {
-    menu.classList.remove("open");
-    burger.classList.remove("open");
-    burger.setAttribute("aria-expanded", "false");
-    overlay.classList.remove("show");
-    document.body.style.overflow = "";
-  }
-
+  const nav = $("#nav"), burger = $("#navBurger"), navClose = $("#navClose"),
+        menu = $("#navMenu"), overlay = $("#navOverlay");
+  function openMenu(){menu.classList.add("open");burger.classList.add("open");burger.setAttribute("aria-expanded","true");overlay.classList.add("show");document.body.style.overflow="hidden";}
+  function closeMenu(){menu.classList.remove("open");burger.classList.remove("open");burger.setAttribute("aria-expanded","false");overlay.classList.remove("show");document.body.style.overflow="";}
   burger.addEventListener("click", () => menu.classList.contains("open") ? closeMenu() : openMenu());
-  if (navClose)  navClose.addEventListener("click", closeMenu);
-  if (overlay)   overlay.addEventListener("click", closeMenu);
-
+  navClose && navClose.addEventListener("click", closeMenu);
+  overlay && overlay.addEventListener("click", closeMenu);
   $$("#navMenu a").forEach(a => a.addEventListener("click", closeMenu));
-
-  window.addEventListener("scroll", () => {
-    nav.classList.toggle("scrolled", window.scrollY > 60);
-  }, { passive: true });
-
-  /* Close menu on Escape */
+  window.addEventListener("scroll", () => nav.classList.toggle("scrolled", window.scrollY > 60), { passive:true });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
 
   /* =========================================================
-     LIVE COUNTDOWN
+     COUNTDOWN
      ========================================================= */
-  const cd = {
-    d: $("#cd-days"),
-    h: $("#cd-hours"),
-    m: $("#cd-mins"),
-    s: $("#cd-secs"),
-  };
-  const pad = n => String(n).padStart(2, "0");
-
+  const cd = { d:$("#cd-days"), h:$("#cd-hours"), m:$("#cd-mins"), s:$("#cd-secs") };
+  const pad = n => String(n).padStart(2,"0");
   function tick() {
     const diff = WEDDING_DATE - new Date();
     if (diff <= 0) {
       $("#countdown").innerHTML =
         '<p style="font-family:Great Vibes,cursive;font-size:clamp(1.4rem,5vw,2rem);color:#fff;text-align:center">We are married! 🎉 God bless us!</p>';
-      clearInterval(timer);
-      return;
+      clearInterval(timer); return;
     }
-    const DAY = 86400000, HR = 3600000, MIN = 60000;
-    cd.d.textContent = pad(Math.floor(diff / DAY));
-    cd.h.textContent = pad(Math.floor((diff % DAY)  / HR));
-    cd.m.textContent = pad(Math.floor((diff % HR)   / MIN));
-    cd.s.textContent = pad(Math.floor((diff % MIN)  / 1000));
+    const DAY=864e5, HR=36e5, MIN=6e4;
+    cd.d.textContent = pad(Math.floor(diff/DAY));
+    cd.h.textContent = pad(Math.floor((diff%DAY)/HR));
+    cd.m.textContent = pad(Math.floor((diff%HR)/MIN));
+    cd.s.textContent = pad(Math.floor((diff%MIN)/1000));
   }
-  tick();
-  const timer = setInterval(tick, 1000);
+  tick(); const timer = setInterval(tick, 1000);
 
   /* =========================================================
-     REVEAL  on scroll (Intersection Observer)
+     REVEAL ON SCROLL
      ========================================================= */
   const io = new IntersectionObserver(
-    entries => entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-    }),
-    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),
+    { threshold:0.1, rootMargin:"0px 0px -40px 0px" }
   );
   $$(".reveal").forEach(el => io.observe(el));
 
   /* =========================================================
-     BACKGROUND MUSIC
+     BACKGROUND MUSIC  —  gentle "Canon in D" synth
+     (falls back to assets/music.mp3 if you add the file)
      ========================================================= */
-  const audio    = $("#bgMusic");
-  const musicBtn = $("#musicToggle");
-  let musicOn    = false;
+  const Music = (function () {
+    const audioEl = $("#bgMusic");
+    const btn = $("#musicToggle");
+    let ctx, master, delay, lp, playing = false, usingFile = false,
+        schedTimer = null, step = 0, nextTime = 0;
 
-  function tryPlayMusic() {
-    if (musicOn) return;
-    audio.volume = 0.45;
-    audio.play()
-      .then(() => {
-        musicOn = true;
-        musicBtn.classList.add("playing");
-        musicBtn.setAttribute("title", "Pause music");
-        musicBtn.setAttribute("aria-label", "Pause background music");
-      })
-      .catch(() => { /* no file / autoplay blocked */ });
-  }
+    /* progression — Pachelbel Canon in D (public domain) */
+    const STEP = 0.42;                     // eighth-note length (s)
+    const arps = [
+      ["F#4","A4","D5","A4"], // D
+      ["E4","A4","C#5","A4"], // A
+      ["D4","F#4","B4","F#4"],// Bm
+      ["C#4","F#4","A4","F#4"],//F#m
+      ["D4","G4","B4","G4"],  // G
+      ["F#4","A4","D5","A4"], // D
+      ["D4","G4","B4","G4"],  // G
+      ["E4","A4","C#5","A4"], // A
+    ];
+    const bass = ["D2","A2","B2","F#2","G2","D2","G2","A2"];
 
-  musicBtn.addEventListener("click", () => {
-    if (musicOn) {
-      audio.pause();
-      musicOn = false;
-      musicBtn.classList.remove("playing");
-      musicBtn.setAttribute("title", "Play music");
-      musicBtn.setAttribute("aria-label", "Play background music");
-    } else {
-      tryPlayMusic();
+    const freq = n => {
+      const m = { C:0,"C#":1,D:2,"D#":3,E:4,F:5,"F#":6,G:7,"G#":8,A:9,"A#":10,B:11 };
+      const name = n.slice(0, -1), oct = +n.slice(-1);
+      const midi = (oct + 1) * 12 + m[name];
+      return 440 * Math.pow(2, (midi - 69) / 12);
+    };
+
+    function voice(f, t, dur, g, type) {
+      const o = ctx.createOscillator(), o2 = ctx.createOscillator(), gain = ctx.createGain();
+      o.type = type || "triangle"; o.frequency.value = f;
+      o2.type = "sine"; o2.frequency.value = f; o2.detune.value = 5;
+      o.connect(gain); o2.connect(gain); gain.connect(lp);
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(g, t + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.start(t); o2.start(t); o.stop(t + dur + 0.05); o2.stop(t + dur + 0.05);
     }
-  });
+
+    function scheduler() {
+      while (nextTime < ctx.currentTime + 0.15) {
+        const chord = (step / 4) | 0 % arps.length;
+        const idx = step % 4;
+        const ci = chord % arps.length;
+        voice(freq(arps[ci][idx]), nextTime, 0.55, 0.06);      // arpeggio
+        if (idx === 0) voice(freq(bass[ci]), nextTime, 1.7, 0.05, "sine"); // bass
+        if (idx === 0 && Math.random() > 0.6)                  // soft sparkle bell
+          voice(freq(arps[ci][2]) * 2, nextTime, 0.9, 0.015, "sine");
+        nextTime += STEP;
+        step = (step + 1) % (arps.length * 4);
+      }
+      schedTimer = setTimeout(scheduler, 30);
+    }
+
+    function startSynth() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = 0;
+      lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2400;
+      delay = ctx.createDelay(); delay.delayTime.value = 0.33;
+      const fb = ctx.createGain(); fb.gain.value = 0.28;
+      const wet = ctx.createGain(); wet.gain.value = 0.25;
+      lp.connect(master);
+      lp.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
+      master.connect(ctx.destination);
+      master.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 2);  // gentle fade-in
+      step = 0; nextTime = ctx.currentTime + 0.1;
+      scheduler();
+      playing = true; setBtn(true);
+    }
+    function stopSynth() {
+      if (schedTimer) clearTimeout(schedTimer);
+      if (master && ctx) {
+        master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.6);
+        setTimeout(() => { try { ctx.close(); } catch (_) {} ctx = null; }, 800);
+      }
+    }
+    function setBtn(on) {
+      btn.classList.toggle("playing", on);
+      btn.title = on ? "Pause music" : "Play music";
+      btn.setAttribute("aria-label", on ? "Pause background music" : "Play background music");
+    }
+
+    function start() {
+      if (playing) return;
+      audioEl.volume = 0.45;
+      audioEl.play()
+        .then(() => { usingFile = true; playing = true; setBtn(true); })
+        .catch(() => { startSynth(); });   // no file → synth
+    }
+    function stop() {
+      if (usingFile) audioEl.pause(); else stopSynth();
+      playing = false; usingFile = false; setBtn(false);
+    }
+    btn.addEventListener("click", () => playing ? stop() : start());
+    return { start, stop };
+  })();
 
   /* =========================================================
-     VENUE — directions button
+     VENUE directions
      ========================================================= */
-  const dirUrl = "https://www.google.com/maps/dir/?api=1&destination=" +
-    encodeURIComponent(VENUE_QUERY);
   const dirBtn = $("#directionsBtn");
-  if (dirBtn) dirBtn.href = dirUrl;
+  if (dirBtn) dirBtn.href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(VENUE_QUERY);
 
   /* =========================================================
      WHATSAPP SHARE
      ========================================================= */
-  function buildShareUrl() {
-    const text = "You're invited to Sajil ❤️ Jino's wedding on 02 July 2026 at Holy Family Church, Nagercoil! View the invitation: ";
-    return "https://wa.me/?text=" + encodeURIComponent(text + SITE_URL);
+  const shareUrl = "https://wa.me/?text=" + encodeURIComponent(
+    "You're invited to Sajil ❤️ Jino's wedding on 02 July 2026 at Holy Family Church, Nagercoil! View the invitation: " + SITE_URL);
+  if ($("#shareWhatsApp")) $("#shareWhatsApp").href = shareUrl;
+  if ($("#footerShare"))   $("#footerShare").href   = shareUrl;
+  if ($("#shareCardWA"))   $("#shareCardWA").addEventListener("click", () => window.open(shareUrl, "_blank", "noopener"));
+
+  /* =========================================================
+     ADD TO CALENDAR  (Google Calendar template)
+     ========================================================= */
+  function calUrl() {
+    const start = "20260702T050000Z";          // 10:30 IST
+    const end   = "20260702T070000Z";          // 12:30 IST
+    const text  = "Sajil ❤️ Jino — Holy Matrimony";
+    const det   = "With the blessings of our parents, join us for the Nuptial Mass of Sajil & Jino. #SajilWedsJino";
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent(text) +
+      "&dates=" + start + "/" + end +
+      "&details=" + encodeURIComponent(det) +
+      "&location=" + encodeURIComponent(VENUE_FULL);
   }
-  const shareLink   = $("#shareWhatsApp");
-  const footerShare = $("#footerShare");
-  if (shareLink)   shareLink.href   = buildShareUrl();
-  if (footerShare) footerShare.href = buildShareUrl();
+  function openCalendar() { window.open(calUrl(), "_blank", "noopener"); }
+  $("#heroCalendar") && $("#heroCalendar").addEventListener("click", openCalendar);
+  $("#addCalendar")  && $("#addCalendar").addEventListener("click", openCalendar);
 
   /* =========================================================
      GALLERY + LIGHTBOX
      ========================================================= */
   const photoIds = [
-    "1519741497674-611481863552",
-    "1606800052052-a08af7148866",
-    "1583939003579-730e3918a45a",
-    "1511285560929-80b456fea0bc",
-    "1465495976277-4387d4b0b4c6",
-    "1522673607200-164d1b6ce486",
-    "1537633552985-df8429e8048b",
-    "1530653333484-8e3c6c1c3a1f",
+    "1519741497674-611481863552","1606800052052-a08af7148866","1583939003579-730e3918a45a",
+    "1511285560929-80b456fea0bc","1465495976277-4387d4b0b4c6","1522673607200-164d1b6ce486",
+    "1537633552985-df8429e8048b","1530653333484-8e3c6c1c3a1f",
   ];
-
-  const imgUrls = photoIds.map(
-    id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=700&q=80`
-  );
-
+  const imgUrls = photoIds.map(id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=700&q=80`);
   const grid = $("#galleryGrid");
   imgUrls.forEach((url, i) => {
     const fig = document.createElement("figure");
     fig.className = "reveal";
+    fig.tabIndex = 0; fig.setAttribute("role","button"); fig.setAttribute("aria-label", `View photo ${i+1}`);
     const img = document.createElement("img");
-    img.src     = url;
-    img.alt     = `Wedding gallery photo ${i + 1}`;
-    img.loading = "lazy";
-    img.decoding = "async";
+    img.src = url; img.alt = `Wedding gallery photo ${i+1}`; img.loading = "lazy"; img.decoding = "async";
     fig.appendChild(img);
-    fig.addEventListener("click", () => openLightbox(i));
-    /* keyboard accessible */
-    fig.setAttribute("tabindex", "0");
-    fig.setAttribute("role", "button");
-    fig.setAttribute("aria-label", `View wedding photo ${i + 1}`);
-    fig.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(i); } });
+    fig.addEventListener("click", () => open(i));
+    fig.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); } });
     grid.appendChild(fig);
   });
-
-  /* re-observe new gallery figures */
   $$(".gallery-grid figure.reveal").forEach(el => io.observe(el));
 
-  const lb    = $("#lightbox");
-  const lbImg = $("#lbImg");
-  let lbIdx   = 0;
-
-  function openLightbox(i) {
-    lbIdx = i;
-    lbImg.src = imgUrls[i];
-    lb.classList.add("open");
-    lb.setAttribute("aria-hidden", "false");
-    lbImg.focus();
-  }
-  function closeLightbox() {
-    lb.classList.remove("open");
-    lb.setAttribute("aria-hidden", "true");
-  }
-  function step(dir) {
-    lbIdx = (lbIdx + dir + imgUrls.length) % imgUrls.length;
-    /* brief fade transition */
-    lbImg.style.opacity = "0";
-    setTimeout(() => { lbImg.src = imgUrls[lbIdx]; lbImg.style.opacity = "1"; }, 160);
-  }
-
-  $("#lbClose").addEventListener("click", closeLightbox);
-  $("#lbNext").addEventListener("click",  () => step(1));
-  $("#lbPrev").addEventListener("click",  () => step(-1));
-  lb.addEventListener("click", e => { if (e.target === lb) closeLightbox(); });
-
-  /* touch swipe for lightbox */
-  let touchSX = 0;
-  lb.addEventListener("touchstart", e => { touchSX = e.touches[0].clientX; }, { passive: true });
-  lb.addEventListener("touchend",   e => {
-    const dx = e.changedTouches[0].clientX - touchSX;
-    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
-  }, { passive: true });
-
+  const lb = $("#lightbox"), lbImg = $("#lbImg");
+  let idx = 0;
+  lbImg.style.transition = "opacity .16s ease";
+  function open(i){ idx=i; lbImg.src=imgUrls[i]; lb.classList.add("open"); lb.setAttribute("aria-hidden","false"); }
+  function close(){ lb.classList.remove("open"); lb.setAttribute("aria-hidden","true"); }
+  function step2(d){ idx=(idx+d+imgUrls.length)%imgUrls.length; lbImg.style.opacity="0"; setTimeout(()=>{lbImg.src=imgUrls[idx];lbImg.style.opacity="1";},160); }
+  $("#lbClose").addEventListener("click", close);
+  $("#lbNext").addEventListener("click", () => step2(1));
+  $("#lbPrev").addEventListener("click", () => step2(-1));
+  lb.addEventListener("click", e => { if (e.target === lb) close(); });
+  let tx = 0;
+  lb.addEventListener("touchstart", e => tx = e.touches[0].clientX, { passive:true });
+  lb.addEventListener("touchend",   e => { const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) step2(dx < 0 ? 1 : -1); }, { passive:true });
   document.addEventListener("keydown", e => {
     if (!lb.classList.contains("open")) return;
-    if (e.key === "Escape")      closeLightbox();
-    if (e.key === "ArrowRight")  step(1);
-    if (e.key === "ArrowLeft")   step(-1);
-  });
-
-  /* smooth lightbox image transition */
-  lbImg.style.transition = "opacity .16s ease";
-
-  /* =========================================================
-     RSVP  —  send via WhatsApp
-     ========================================================= */
-  $("#rsvpForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const f = e.target;
-    const msg =
-      `*Wedding RSVP — Sajil ❤️ Jino*%0A` +
-      `Name: ${encodeURIComponent(f.guestName.value)}%0A` +
-      `Phone: ${encodeURIComponent(f.guestPhone.value)}%0A` +
-      `Guests: ${f.guestCount.value}%0A` +
-      `Attendance: ${encodeURIComponent(f.attendance.value)}%0A` +
-      `Notes: ${encodeURIComponent(f.notes.value || "—")}`;
-    window.open(`https://wa.me/${HOST_WHATSAPP}?text=${msg}`, "_blank", "noopener");
-    f.reset();
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowRight") step2(1);
+    if (e.key === "ArrowLeft") step2(-1);
   });
 
   /* =========================================================
-     WEDDING WISHES  (localStorage)
+     WEDDING WISHES (localStorage)
      ========================================================= */
-  const wishForm = $("#wishForm");
-  const wishList = $("#wishList");
-  const KEY      = "sajiljino_wishes_v2";
-
-  function escHtml(str) {
-    const d = document.createElement("div");
-    d.textContent = str;
-    return d.innerHTML;
-  }
-
-  function renderWishes(wishes) {
+  const wishForm = $("#wishForm"), wishList = $("#wishList"), KEY = "sajiljino_wishes_v2";
+  const esc = s => { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; };
+  function renderWishes(w){
     wishList.innerHTML = "";
-    wishes.slice().reverse().forEach(w => {
-      const el = document.createElement("div");
-      el.className = "wish";
-      el.innerHTML =
-        `<div class="wish-head">` +
-        `<div class="wish-avatar">${escHtml((w.name[0] || "?").toUpperCase())}</div>` +
-        `<span class="wish-name">${escHtml(w.name)}</span>` +
-        `</div>` +
-        `<p class="wish-msg">${escHtml(w.msg)}</p>`;
+    w.slice().reverse().forEach(x => {
+      const el = document.createElement("div"); el.className = "wish";
+      el.innerHTML = `<div class="wish-head"><div class="wish-avatar">${esc((x.name[0]||"?").toUpperCase())}</div>`+
+        `<span class="wish-name">${esc(x.name)}</span></div><p class="wish-msg">${esc(x.msg)}</p>`;
       wishList.appendChild(el);
     });
   }
-
-  function loadWishes() {
-    let wishes = [];
-    try { wishes = JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) {}
-    if (!wishes.length) {
-      wishes = [
-        { name: "Aunty Mary",   msg: "Wishing you a lifetime of love and God's abundant blessings! 🙏" },
-        { name: "Rahul",        msg: "So happy for you both. Congratulations on your big day! ❤️" },
-        { name: "Priya Thomas", msg: "May God shower you with joy, peace and endless love. God bless! ✝️" },
-      ];
-    }
-    renderWishes(wishes);
+  function loadWishes(){
+    let w = [];
+    try { w = JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) {}
+    if (!w.length) w = [
+      { name:"Aunty Mary",   msg:"Wishing you a lifetime of love and God's abundant blessings! 🙏" },
+      { name:"Rahul",        msg:"So happy for you both. Congratulations on your big day! ❤️" },
+      { name:"Priya Thomas", msg:"May God shower you with joy, peace and endless love. God bless! ✝️" },
+    ];
+    renderWishes(w);
   }
-
   wishForm.addEventListener("submit", e => {
     e.preventDefault();
-    const name = $("#wishName").value.trim();
-    const msg  = $("#wishMsg").value.trim();
+    const name = $("#wishName").value.trim(), msg = $("#wishMsg").value.trim();
     if (!name || !msg) return;
-    let wishes = [];
-    try { wishes = JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) {}
-    wishes.push({ name, msg });
-    localStorage.setItem(KEY, JSON.stringify(wishes));
-    renderWishes(wishes);
-    wishForm.reset();
-    /* scroll to first wish */
-    wishList.firstElementChild?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    let w = []; try { w = JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) {}
+    w.push({ name, msg });
+    localStorage.setItem(KEY, JSON.stringify(w));
+    renderWishes(w); wishForm.reset();
   });
-
   loadWishes();
 
 })();

@@ -4,71 +4,74 @@ A premium, mobile-first digital wedding invitation for the Christian wedding of
 **Sajil & Jino**, celebrating their Holy Matrimony on **Thursday, 02 July 2026**
 at **Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil**.
 
-Built as a fast, SEO-friendly static site (HTML · CSS · vanilla JS) — no build
-step required — and ready to deploy to **Vercel**.
+Fast, SEO-friendly static site (HTML · CSS · vanilla JS) — no build step — ready
+to deploy to **Vercel**.
 
 ## ✨ Features
 
-- **Cinematic entrance** — animated loader + "Open Invitation" gate
-- **Hero** with *Sajil ❤️ Jino*, the wedding date and a Bible verse
-- **Live countdown timer** to the ceremony (02 Jul 2026, 10:30 AM IST)
-- **Floating flower-petal** animation across the page
-- **Background music toggle** (add `assets/music.mp3`)
-- **Floating navigation** + **WhatsApp share** button
-- Sections: Welcome · Our Story (timeline) · Wedding Events · Family ·
-  Venue (Google Maps + directions) · Gallery (lightbox) · RSVP (→ WhatsApp) ·
-  Travel & Accommodation · Wedding Wishes · Footer
-- **RSVP form** sends responses to the host via WhatsApp (no backend)
-- **Wedding Wishes** wall saved in the browser (localStorage)
-- Glassmorphism, smooth scroll reveals, royal gold / ivory / maroon / blush palette
-- Fully responsive, reduced-motion friendly
+- **Cinematic 3D entrance** — loader → invitation card with a wax seal → twin
+  doors swing open in 3D with radiant light-rays and a golden sparkle burst
+- **Bilingual** — elegant Tamil (Noto Serif Tamil) alongside English throughout
+- **Live countdown** to the ceremony (02 Jul 2026, 10:30 AM IST)
+- **Built-in background music** — a gentle synthesised *Canon in D* plays via the
+  Web Audio API (no file needed); drop in `assets/music.mp3` to use your own track
+- **Save the Date** section — downloadable share card + WhatsApp share
+- **Add to Calendar** — one tap adds the ceremony to Google Calendar
+- **Floating flower petals**, floating nav, WhatsApp share button
+- Sections: Welcome · Save the Date · Our Story · Wedding Events · Family ·
+  Venue (Google Maps + directions) · Gallery (lightbox + swipe) · Travel ·
+  Wedding Wishes · Footer
+- Royal gold / ivory / maroon / blush palette, glassmorphism, floral dividers,
+  scroll reveals, mandala motifs
+- **Fully responsive** — phones, tablets, iPad, laptop, desktop; iOS safe-area
+  insets, 44px touch targets, landscape + reduced-motion support
+- Rich **Open Graph** preview image for beautiful WhatsApp link cards
 
 ## 🛠 Customising
 
-All the editable details live at the top of `script.js`:
+Editable details live at the top of `script.js`:
 
 ```js
-const WEDDING_DATE  = new Date("2026-07-02T10:30:00+05:30");
-const HOST_WHATSAPP = "919876543210";  // number that receives RSVPs
-const VENUE_QUERY   = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
+const WEDDING_DATE = new Date("2026-07-02T10:30:00+05:30");
+const VENUE_QUERY  = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
 ```
 
-- Names, dates, events, family and travel details → edit `index.html`.
+- Names, dates, events, family, Tamil text → edit `index.html`.
 - Photos & music → see `assets/README.md`.
-- Replace the placeholder phone numbers / emails / social links in the footer.
+- Footer phone / email / social links → edit `index.html`.
+
+### Regenerating the share images (optional)
+
+`assets/og-image.png` and `assets/save-the-date.png` are pre-generated and
+committed. To re-create them after a text change:
+
+```bash
+npm install sharp
+node scripts/generate-images.mjs
+```
 
 ## 🚀 Deploy to Vercel
 
-This is a zero-config static site.
+Zero-config static site.
 
-**Option A — Dashboard**
-1. Push this repo to GitHub.
-2. Go to [vercel.com/new](https://vercel.com/new), import the repository.
-3. Framework Preset: **Other** · leave build & output settings empty.
-4. Click **Deploy** — done.
-
-**Option B — CLI**
-```bash
-npm i -g vercel
-vercel        # preview
-vercel --prod # production
-```
-
-Vercel serves `index.html` automatically; `vercel.json` adds clean URLs and
-sensible caching/security headers.
+1. Push to GitHub → [vercel.com/new](https://vercel.com/new) → import the repo.
+2. Framework Preset: **Other** · leave build & output empty.
+3. **Deploy.** `vercel.json` adds clean URLs + caching/security headers.
 
 ## 📂 Structure
 
 ```
 .
-├── index.html      # all sections / content
-├── styles.css      # theme, layout, animations, responsive
-├── script.js       # countdown, petals, gallery, RSVP, wishes, music
-├── vercel.json     # static hosting config
+├── index.html
+├── styles.css
+├── script.js
+├── vercel.json
+├── scripts/generate-images.mjs   # regenerates the share cards (dev only)
 └── assets/
     ├── favicon.svg
-    ├── music.mp3   # (add your own)
-    └── README.md
+    ├── og-image.png / .jpg        # WhatsApp/social link preview
+    ├── save-the-date.png          # downloadable share card
+    └── music.mp3                  # (optional — synth plays if absent)
 ```
 
 Made with ❤️ for Sajil & Jino · #SajilWedsJino

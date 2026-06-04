@@ -16,18 +16,23 @@
 
   <!-- Open Graph / WhatsApp preview -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sajil ❤️ Jino Wedding" />
   <meta property="og:title" content="Sajil ❤️ Jino — Wedding Invitation" />
-  <meta property="og:description" content="Join us as we celebrate our Holy Matrimony on Thursday, 02 July 2026 · Holy Family Church, Nagercoil." />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80" />
+  <meta property="og:description" content="Together with our families, we invite you to our Holy Matrimony · Thursday, 02 July 2026 · Holy Family Church, Nagercoil." />
+  <meta property="og:image" content="https://sajil-jino-wedding.vercel.app/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:url" content="https://sajil-jino-wedding.vercel.app/" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sajil ❤️ Jino — Wedding Invitation" />
+  <meta name="twitter:image" content="https://sajil-jino-wedding.vercel.app/assets/og-image.png" />
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
-  <!-- Fonts -->
+  <!-- Fonts (Latin + Tamil) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Noto+Serif+Tamil:wght@400;500;600&family=Catamaran:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -39,47 +44,58 @@
       <div class="loader-ring"></div>
       <div class="loader-monogram">S<span>&amp;</span>J</div>
       <p class="loader-text">Sajil &amp; Jino</p>
-      <span class="loader-sub">Loading our love story…</span>
+      <span class="loader-sub">திருமண அழைப்பிதழ் · Loading our love story…</span>
     </div>
   </div>
 
-  <!-- ===== Invitation Gate (cinema double-door) ===== -->
+  <!-- ===== Invitation Gate (3D doors + light rays + seal) ===== -->
   <div class="gate" id="gate" aria-hidden="true">
-    <!-- Door panels -->
-    <div class="gate-door gate-door-l" aria-hidden="true">
-      <div class="gate-door-border"></div>
-      <div class="gate-door-ornament">
-        <div class="gate-door-cross">✚</div>
-        <div class="gate-door-lines">
-          <span></span><span></span><span></span>
+    <!-- radiant light rays revealed as doors open -->
+    <div class="gate-rays" aria-hidden="true"></div>
+    <div class="gate-vignette" aria-hidden="true"></div>
+
+    <!-- 3D swinging doors -->
+    <div class="gate-doors" aria-hidden="true">
+      <div class="gate-door gate-door-l">
+        <div class="gate-door-inner">
+          <div class="gate-door-frame"></div>
+          <div class="gate-door-motif">
+            <span class="gd-cross">✚</span>
+            <span class="gd-floral">❦</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="gate-door gate-door-r" aria-hidden="true">
-      <div class="gate-door-border"></div>
-      <div class="gate-door-ornament">
-        <div class="gate-door-cross">✚</div>
-        <div class="gate-door-lines">
-          <span></span><span></span><span></span>
+      <div class="gate-door gate-door-r">
+        <div class="gate-door-inner">
+          <div class="gate-door-frame"></div>
+          <div class="gate-door-motif">
+            <span class="gd-cross">✚</span>
+            <span class="gd-floral">❧</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Card above doors -->
+    <!-- Centre invitation card / seal -->
     <div class="gate-card" id="gateCard">
       <div class="gate-glow-ring" aria-hidden="true"></div>
-      <div class="gate-corner gate-corner-tl" aria-hidden="true"></div>
-      <div class="gate-corner gate-corner-tr" aria-hidden="true"></div>
-      <div class="gate-corner gate-corner-bl" aria-hidden="true"></div>
-      <div class="gate-corner gate-corner-br" aria-hidden="true"></div>
-      <div class="gate-deco" aria-hidden="true">✦</div>
-      <p class="gate-pre">You are cordially invited to the wedding of</p>
+      <div class="gate-mandala" aria-hidden="true"></div>
+      <div class="gate-corner gate-corner-tl"></div>
+      <div class="gate-corner gate-corner-tr"></div>
+      <div class="gate-corner gate-corner-bl"></div>
+      <div class="gate-corner gate-corner-br"></div>
+
+      <div class="gate-seal" aria-hidden="true">
+        <span>S<small>&amp;</small>J</span>
+      </div>
+      <p class="gate-pre">உங்களை அன்புடன் அழைக்கிறோம்</p>
+      <p class="gate-pre2">You are cordially invited to the wedding of</p>
       <h2 class="gate-names">
         <span class="gate-n1">Sajil</span>
         <span class="gate-amp">❤</span>
         <span class="gate-n2">Jino</span>
       </h2>
-      <p class="gate-verse">"What God has joined, let no one separate"</p>
+      <p class="gate-verse">"What God has joined together, let no one separate"</p>
       <p class="gate-date">Thursday · 02 July 2026</p>
       <p class="gate-venue">Holy Family Church · Nagercoil</p>
       <button class="gate-btn" id="openInvite" aria-label="Open the wedding invitation">
@@ -109,12 +125,12 @@
     <nav class="nav-menu" id="navMenu" aria-label="Main navigation">
       <button class="nav-close" id="navClose" aria-label="Close menu">×</button>
       <a href="#welcome">Welcome</a>
+      <a href="#savedate">Save the Date</a>
       <a href="#story">Our Story</a>
       <a href="#events">Events</a>
       <a href="#family">Family</a>
       <a href="#venue">Venue</a>
       <a href="#gallery">Gallery</a>
-      <a href="#rsvp">RSVP</a>
       <a href="#travel">Travel</a>
       <a href="#wishes">Wishes</a>
     </nav>
@@ -124,42 +140,16 @@
   <main>
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
-      <!-- Ken-Burns animated background -->
       <div class="hero-bg" aria-hidden="true"></div>
-      <!-- Layered cinematic overlay -->
       <div class="hero-overlay" aria-hidden="true"></div>
-      <!-- Animated shimmer sweep -->
       <div class="hero-shimmer" aria-hidden="true"></div>
-      <!-- Decorative SVG corner ornaments -->
       <div class="hero-decor" aria-hidden="true">
-        <svg class="hero-decor-tl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 110 L10 10 L110 10" stroke="rgba(230,198,107,0.5)" stroke-width="1.5" fill="none"/>
-          <path d="M10 10 Q60 10 60 60 Q60 10 110 10" stroke="rgba(230,198,107,0.25)" stroke-width="1" fill="none"/>
-          <circle cx="10" cy="10" r="4" fill="rgba(230,198,107,0.6)"/>
-          <path d="M20 10 Q35 25 20 40" stroke="rgba(230,198,107,0.3)" stroke-width="1" fill="none"/>
-          <path d="M10 20 Q25 35 40 20" stroke="rgba(230,198,107,0.3)" stroke-width="1" fill="none"/>
-        </svg>
-        <svg class="hero-decor-tr" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M110 110 L110 10 L10 10" stroke="rgba(230,198,107,0.5)" stroke-width="1.5" fill="none"/>
-          <circle cx="110" cy="10" r="4" fill="rgba(230,198,107,0.6)"/>
-          <path d="M100 10 Q85 25 100 40" stroke="rgba(230,198,107,0.3)" stroke-width="1" fill="none"/>
-          <path d="M110 20 Q95 35 80 20" stroke="rgba(230,198,107,0.3)" stroke-width="1" fill="none"/>
-        </svg>
-        <svg class="hero-decor-bl" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 10 L10 110 L110 110" stroke="rgba(230,198,107,0.5)" stroke-width="1.5" fill="none"/>
-          <circle cx="10" cy="110" r="4" fill="rgba(230,198,107,0.6)"/>
-        </svg>
-        <svg class="hero-decor-br" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M110 10 L110 110 L10 110" stroke="rgba(230,198,107,0.5)" stroke-width="1.5" fill="none"/>
-          <circle cx="110" cy="110" r="4" fill="rgba(230,198,107,0.6)"/>
-        </svg>
-        <!-- Center cross emblem -->
+        <svg class="hero-decor-tl" viewBox="0 0 120 120" fill="none"><path d="M10 110 L10 10 L110 10" stroke="rgba(230,198,107,0.5)" stroke-width="1.5"/><path d="M10 10 Q60 10 60 60 Q60 10 110 10" stroke="rgba(230,198,107,0.25)" stroke-width="1"/><circle cx="10" cy="10" r="4" fill="rgba(230,198,107,0.6)"/><path d="M20 10 Q35 25 20 40" stroke="rgba(230,198,107,0.3)" stroke-width="1"/><path d="M10 20 Q25 35 40 20" stroke="rgba(230,198,107,0.3)" stroke-width="1"/></svg>
+        <svg class="hero-decor-tr" viewBox="0 0 120 120" fill="none"><path d="M110 110 L110 10 L10 10" stroke="rgba(230,198,107,0.5)" stroke-width="1.5"/><circle cx="110" cy="10" r="4" fill="rgba(230,198,107,0.6)"/><path d="M100 10 Q85 25 100 40" stroke="rgba(230,198,107,0.3)" stroke-width="1"/><path d="M110 20 Q95 35 80 20" stroke="rgba(230,198,107,0.3)" stroke-width="1"/></svg>
+        <svg class="hero-decor-bl" viewBox="0 0 120 120" fill="none"><path d="M10 10 L10 110 L110 110" stroke="rgba(230,198,107,0.5)" stroke-width="1.5"/><circle cx="10" cy="110" r="4" fill="rgba(230,198,107,0.6)"/></svg>
+        <svg class="hero-decor-br" viewBox="0 0 120 120" fill="none"><path d="M110 10 L110 110 L10 110" stroke="rgba(230,198,107,0.5)" stroke-width="1.5"/><circle cx="110" cy="110" r="4" fill="rgba(230,198,107,0.6)"/></svg>
         <div class="hero-cross-ring" aria-hidden="true">
-          <svg viewBox="0 0 80 80" width="80" height="80">
-            <circle cx="40" cy="40" r="38" stroke="rgba(230,198,107,0.3)" stroke-width="1" fill="none"/>
-            <circle cx="40" cy="40" r="30" stroke="rgba(230,198,107,0.15)" stroke-width="1" fill="none"/>
-            <text x="40" y="48" text-anchor="middle" fill="rgba(230,198,107,0.6)" font-size="28" font-family="serif">✚</text>
-          </svg>
+          <svg viewBox="0 0 80 80" width="80" height="80"><circle cx="40" cy="40" r="38" stroke="rgba(230,198,107,0.3)" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="30" stroke="rgba(230,198,107,0.15)" stroke-width="1" fill="none"/><text x="40" y="48" text-anchor="middle" fill="rgba(230,198,107,0.6)" font-size="28" font-family="serif">✚</text></svg>
         </div>
       </div>
 
@@ -172,13 +162,13 @@
         </h1>
         <div class="hero-divider" aria-hidden="true"><span></span><span>✦</span><span></span></div>
         <p class="hero-verse">"Therefore what God has joined together, let no one separate." — Mark 10:9</p>
+        <p class="hero-tamil">கடவுளின் ஆசீர்வாதத்துடன் எங்கள் திருமணத்திற்கு அன்புடன் அழைக்கிறோம்</p>
         <div class="hero-date">
           <span>Thursday</span>
           <strong>02 · 07 · 2026</strong>
           <span>Holy Family Church · Nagercoil</span>
         </div>
 
-        <!-- Countdown -->
         <div class="countdown" id="countdown" aria-label="Countdown to the wedding">
           <div class="cd-box"><span id="cd-days">00</span><label>Days</label></div>
           <div class="cd-sep" aria-hidden="true">:</div>
@@ -189,31 +179,33 @@
           <div class="cd-box"><span id="cd-secs">00</span><label>Seconds</label></div>
         </div>
 
-        <a href="#rsvp" class="btn-primary">RSVP Now</a>
+        <div class="hero-actions">
+          <a href="#savedate" class="btn-primary">Save the Date</a>
+          <button class="btn-ghost" id="heroCalendar">＋ Add to Calendar</button>
+        </div>
       </div>
       <div class="scroll-cue" aria-hidden="true"><span></span></div>
     </section>
 
     <!-- ===== WELCOME ===== -->
     <section class="section welcome" id="welcome">
-      <!-- Decorative parchment arch background -->
       <div class="welcome-bg" aria-hidden="true">
         <div class="welcome-arch"></div>
         <div class="welcome-florals">
-          <span class="wf wf-tl">❦</span>
-          <span class="wf wf-tr">❧</span>
-          <span class="wf wf-bl">✾</span>
-          <span class="wf wf-br">❋</span>
+          <span class="wf wf-tl">❦</span><span class="wf wf-tr">❧</span>
+          <span class="wf wf-bl">✾</span><span class="wf wf-br">❋</span>
         </div>
       </div>
       <div class="container reveal" style="position:relative;z-index:1">
         <div class="ornament">✚</div>
+        <p class="tamil-kicker">வாழ்த்துக்கள்</p>
         <h2 class="script-title">With Joyful Hearts</h2>
         <p class="lead">
           With the blessings of Almighty God and our beloved parents,
           we joyfully invite you to share in the celebration of our union
           as we become husband and wife.
         </p>
+        <p class="lead-tamil">கடவுளின் அருளோடும், எங்கள் பெற்றோரின் ஆசீர்வாதத்தோடும், எங்கள் திருமண நல்வாழ்வில் பங்கேற்க உங்களை அன்புடன் அழைக்கிறோம்.</p>
         <h3 class="couple-line">Sajil &amp; Jino</h3>
         <div class="welcome-meta">
           <div><strong>When</strong><span>Thursday, 02 July 2026 · 10:30 AM</span></div>
@@ -224,6 +216,30 @@
       </div>
     </section>
 
+    <!-- floral divider -->
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❦</i><span></span></div>
+
+    <!-- ===== SAVE THE DATE (shareable card) ===== -->
+    <section class="section savedate" id="savedate">
+      <div class="container narrow">
+        <div class="section-head reveal">
+          <span class="kicker">Mark your calendar</span>
+          <h2 class="serif-title">Save the Date</h2>
+          <p class="section-sub">Download our card to share on WhatsApp, or add the day straight to your calendar.</p>
+        </div>
+        <div class="savedate-card reveal">
+          <img src="assets/save-the-date.png" alt="Sajil and Jino Save the Date — 02 July 2026, Holy Family Church Nagercoil" loading="lazy" />
+        </div>
+        <div class="savedate-actions reveal">
+          <a class="btn-primary" id="downloadCard" href="assets/save-the-date.png" download="Sajil-Jino-Save-the-Date.png">⬇ Download Card</a>
+          <button class="btn-ghost dark" id="addCalendar">＋ Add to Calendar</button>
+          <button class="btn-ghost dark" id="shareCardWA">📲 Share on WhatsApp</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❧</i><span></span></div>
+
     <!-- ===== OUR STORY ===== -->
     <section class="section story" id="story">
       <div class="container">
@@ -232,41 +248,27 @@
           <h2 class="serif-title">Our Love Story</h2>
         </div>
         <div class="timeline">
-          <div class="t-item reveal">
-            <div class="t-dot"></div>
-            <div class="t-card">
-              <span class="t-date">A Fateful Meeting · 2021</span>
-              <h3>Where We Met</h3>
-              <p>Our paths first crossed at a family gathering in Nagercoil. A shared smile and a long evening of conversation — and somehow, the world felt a little brighter.</p>
-            </div>
-          </div>
-          <div class="t-item reveal">
-            <div class="t-dot"></div>
-            <div class="t-card">
-              <span class="t-date">Falling in Love · 2022</span>
-              <h3>Growing Closer</h3>
-              <p>From long phone calls to quiet church Sundays, our friendship blossomed into something deeper. We discovered faith, laughter and dreams we both wanted to chase together.</p>
-            </div>
-          </div>
-          <div class="t-item reveal">
-            <div class="t-dot"></div>
-            <div class="t-card">
-              <span class="t-date">The Proposal · 2025</span>
-              <h3>A Yes Forever</h3>
-              <p>Under a sky full of stars, with hearts full of hope, the question was asked — and answered with a joyful "Yes!" Our families rejoiced and the journey to forever began.</p>
-            </div>
-          </div>
-          <div class="t-item reveal">
-            <div class="t-dot"></div>
-            <div class="t-card">
-              <span class="t-date">02 July 2026</span>
-              <h3>Our Wedding Day</h3>
-              <p>And now, surrounded by the people we love most, we say our vows before God. We can't wait to begin our married life — and we'd be honoured to have you beside us.</p>
-            </div>
-          </div>
+          <div class="t-item reveal"><div class="t-dot"></div><div class="t-card">
+            <span class="t-date">A Fateful Meeting · 2021</span><h3>Where We Met</h3>
+            <p>Our paths first crossed at a family gathering in Nagercoil. A shared smile and a long evening of conversation — and somehow, the world felt a little brighter.</p>
+          </div></div>
+          <div class="t-item reveal"><div class="t-dot"></div><div class="t-card">
+            <span class="t-date">Falling in Love · 2022</span><h3>Growing Closer</h3>
+            <p>From long phone calls to quiet church Sundays, our friendship blossomed into something deeper. We discovered faith, laughter and dreams we both wanted to chase together.</p>
+          </div></div>
+          <div class="t-item reveal"><div class="t-dot"></div><div class="t-card">
+            <span class="t-date">The Proposal · 2025</span><h3>A Yes Forever</h3>
+            <p>Under a sky full of stars, with hearts full of hope, the question was asked — and answered with a joyful "Yes!" Our families rejoiced and the journey to forever began.</p>
+          </div></div>
+          <div class="t-item reveal"><div class="t-dot"></div><div class="t-card">
+            <span class="t-date">02 July 2026</span><h3>Our Wedding Day</h3>
+            <p>And now, surrounded by the people we love most, we say our vows before God. We can't wait to begin our married life — and we'd be honoured to have you beside us.</p>
+          </div></div>
         </div>
       </div>
     </section>
+
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❦</i><span></span></div>
 
     <!-- ===== EVENTS ===== -->
     <section class="section events" id="events">
@@ -277,44 +279,26 @@
           <p class="section-sub">We would be delighted to have you join us for each of these joyous occasions.</p>
         </div>
         <div class="event-grid">
-          <article class="event-card reveal">
-            <div class="event-icon">💍</div>
-            <h3>Engagement</h3>
-            <p class="event-when">Sat, 20 June 2026 · 6:00 PM</p>
-            <p class="event-venue">Grace Hall, Nagercoil</p>
-            <p class="event-desc">An intimate evening as we exchange rings and seal our promise before family and close friends.</p>
-          </article>
-          <article class="event-card reveal">
-            <div class="event-icon">🌿</div>
-            <h3>Mehendi</h3>
-            <p class="event-when">Tue, 30 June 2026 · 4:00 PM</p>
-            <p class="event-venue">Bride's Residence, Ramanputhur</p>
-            <p class="event-desc">Music, henna and laughter — a colourful afternoon of joy with the ladies of both families.</p>
-          </article>
-          <article class="event-card reveal">
-            <div class="event-icon">🎶</div>
-            <h3>Sangeet &amp; Welcome Dinner</h3>
-            <p class="event-when">Wed, 01 July 2026 · 7:00 PM</p>
-            <p class="event-venue">Sea Breeze Banquets, Nagercoil</p>
-            <p class="event-desc">An evening of song and dance as both families come together to bless the couple.</p>
-          </article>
-          <article class="event-card reveal featured">
-            <div class="event-icon">⛪</div>
-            <h3>Holy Matrimony</h3>
-            <p class="event-when">Thu, 02 July 2026 · 10:30 AM</p>
-            <p class="event-venue">Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil</p>
-            <p class="event-desc">The sacred Nuptial Mass where we exchange our vows and receive God's blessing on our marriage.</p>
-          </article>
-          <article class="event-card reveal">
-            <div class="event-icon">🥂</div>
-            <h3>Reception</h3>
-            <p class="event-when">Thu, 02 July 2026 · 7:00 PM</p>
-            <p class="event-venue">Sea Breeze Banquets, Nagercoil</p>
-            <p class="event-desc">Join us for dinner and celebration as we toast to the beginning of our new life together.</p>
-          </article>
+          <article class="event-card reveal"><div class="event-icon">💍</div><h3>Engagement</h3>
+            <p class="event-when">Sat, 20 June 2026 · 6:00 PM</p><p class="event-venue">Grace Hall, Nagercoil</p>
+            <p class="event-desc">An intimate evening as we exchange rings and seal our promise before family and close friends.</p></article>
+          <article class="event-card reveal"><div class="event-icon">🌿</div><h3>Mehendi</h3>
+            <p class="event-when">Tue, 30 June 2026 · 4:00 PM</p><p class="event-venue">Bride's Residence, Ramanputhur</p>
+            <p class="event-desc">Music, henna and laughter — a colourful afternoon of joy with the ladies of both families.</p></article>
+          <article class="event-card reveal"><div class="event-icon">🎶</div><h3>Sangeet &amp; Welcome Dinner</h3>
+            <p class="event-when">Wed, 01 July 2026 · 7:00 PM</p><p class="event-venue">Sea Breeze Banquets, Nagercoil</p>
+            <p class="event-desc">An evening of song and dance as both families come together to bless the couple.</p></article>
+          <article class="event-card reveal featured"><div class="event-icon">⛪</div><h3>Holy Matrimony</h3>
+            <p class="event-when">Thu, 02 July 2026 · 10:30 AM</p><p class="event-venue">Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil</p>
+            <p class="event-desc">The sacred Nuptial Mass where we exchange our vows and receive God's blessing on our marriage.</p></article>
+          <article class="event-card reveal"><div class="event-icon">🥂</div><h3>Reception</h3>
+            <p class="event-when">Thu, 02 July 2026 · 7:00 PM</p><p class="event-venue">Sea Breeze Banquets, Nagercoil</p>
+            <p class="event-desc">Join us for dinner and celebration as we toast to the beginning of our new life together.</p></article>
         </div>
       </div>
     </section>
+
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❧</i><span></span></div>
 
     <!-- ===== FAMILY ===== -->
     <section class="section family" id="family">
@@ -325,21 +309,14 @@
         </div>
         <div class="family-grid">
           <div class="family-card reveal">
-            <span class="family-tag">The Bride</span>
-            <h3>Sajil</h3>
-            <p class="family-parents">Daughter of</p>
-            <p class="family-names">Mr. &amp; Mrs. Anthony</p>
+            <span class="family-tag">The Bride</span><h3>Sajil</h3>
+            <p class="family-parents">Daughter of</p><p class="family-names">Mr. &amp; Mrs. Anthony</p>
             <p class="family-of">Ramanputhur, Nagercoil</p>
           </div>
-          <div class="family-emblem reveal">
-            <div class="family-cross">✚</div>
-            <p>United in faith<br>&amp; love</p>
-          </div>
+          <div class="family-emblem reveal"><div class="family-cross">✚</div><p>United in faith<br>&amp; love</p></div>
           <div class="family-card reveal">
-            <span class="family-tag">The Groom</span>
-            <h3>Jino</h3>
-            <p class="family-parents">Son of</p>
-            <p class="family-names">Mr. &amp; Mrs. Joseph</p>
+            <span class="family-tag">The Groom</span><h3>Jino</h3>
+            <p class="family-parents">Son of</p><p class="family-names">Mr. &amp; Mrs. Joseph</p>
             <p class="family-of">Carmel Nagar, Nagercoil</p>
           </div>
         </div>
@@ -349,6 +326,8 @@
         </p>
       </div>
     </section>
+
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❦</i><span></span></div>
 
     <!-- ===== VENUE ===== -->
     <section class="section venue" id="venue">
@@ -366,14 +345,15 @@
             <a class="btn-primary" id="directionsBtn" target="_blank" rel="noopener">Get Directions →</a>
           </div>
           <div class="venue-map">
-            <iframe
-              title="Holy Family Church Location"
+            <iframe title="Holy Family Church Location"
               src="https://www.google.com/maps?q=Holy%20Family%20Church%20Carmel%20Nagar%20Ramanputhur%20Nagercoil&output=embed"
               loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❧</i><span></span></div>
 
     <!-- ===== GALLERY ===== -->
     <section class="section gallery" id="gallery">
@@ -382,13 +362,10 @@
           <span class="kicker">Cherished moments</span>
           <h2 class="serif-title">Our Gallery</h2>
         </div>
-        <div class="gallery-grid" id="galleryGrid">
-          <!-- images injected by JS -->
-        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
       </div>
     </section>
 
-    <!-- Lightbox -->
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
       <button class="lb-close" id="lbClose" aria-label="Close">×</button>
       <button class="lb-prev" id="lbPrev" aria-label="Previous">‹</button>
@@ -396,42 +373,7 @@
       <button class="lb-next" id="lbNext" aria-label="Next">›</button>
     </div>
 
-    <!-- ===== RSVP ===== -->
-    <section class="section rsvp" id="rsvp">
-      <div class="container narrow">
-        <div class="section-head reveal">
-          <span class="kicker">Will you join us?</span>
-          <h2 class="serif-title">RSVP</h2>
-          <p class="section-sub">Kindly respond by 20 June 2026. Your confirmation will be sent to us on WhatsApp.</p>
-        </div>
-        <form class="rsvp-form glass reveal" id="rsvpForm" novalidate>
-          <div class="field">
-            <label for="guestName">Guest Name</label>
-            <input type="text" id="guestName" name="guestName" required placeholder="Your full name" autocomplete="name" />
-          </div>
-          <div class="field">
-            <label for="guestPhone">Phone Number</label>
-            <input type="tel" id="guestPhone" name="guestPhone" required placeholder="+91 ..." autocomplete="tel" />
-          </div>
-          <div class="field">
-            <label for="guestCount">Number of Guests</label>
-            <input type="number" id="guestCount" name="guestCount" min="1" max="20" value="1" required />
-          </div>
-          <div class="field">
-            <label for="attendance">Will you attend?</label>
-            <select id="attendance" name="attendance" required>
-              <option value="Joyfully Accepts">Joyfully Accepts ✓</option>
-              <option value="Regretfully Declines">Regretfully Declines</option>
-            </select>
-          </div>
-          <div class="field full">
-            <label for="notes">Special Notes</label>
-            <textarea id="notes" name="notes" rows="3" placeholder="Any message or dietary needs?"></textarea>
-          </div>
-          <button type="submit" class="btn-primary full">Send RSVP via WhatsApp</button>
-        </form>
-      </div>
-    </section>
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❦</i><span></span></div>
 
     <!-- ===== TRAVEL & ACCOMMODATION ===== -->
     <section class="section travel" id="travel">
@@ -441,38 +383,20 @@
           <h2 class="serif-title">Travel &amp; Accommodation</h2>
         </div>
         <div class="travel-grid">
-          <div class="travel-card reveal">
-            <div class="travel-icon">🏨</div>
-            <h3>Nearby Hotels</h3>
-            <ul>
-              <li>Hotel Rajadhani — 2.5 km</li>
-              <li>Hotel Maria — 3 km</li>
-              <li>Sea Breeze Inn — 4 km</li>
-            </ul>
-            <p class="travel-note">Mention "Sajil &amp; Jino Wedding" for special rates.</p>
-          </div>
-          <div class="travel-card reveal">
-            <div class="travel-icon">🚗</div>
-            <h3>Getting There</h3>
-            <ul>
-              <li>✈ Trivandrum Airport — 75 km</li>
-              <li>🚉 Nagercoil Jn — 5 km</li>
-              <li>🚌 Local cabs &amp; autos available</li>
-            </ul>
-            <p class="travel-note">Shuttle service from Nagercoil Junction on the wedding morning.</p>
-          </div>
-          <div class="travel-card reveal">
-            <div class="travel-icon">📞</div>
-            <h3>Need Help?</h3>
-            <ul>
-              <li>Reception Desk: +91 98765 43210</li>
-              <li>Hospitality: +91 98765 12345</li>
-            </ul>
-            <p class="travel-note">Our family will be happy to assist with anything you need.</p>
-          </div>
+          <div class="travel-card reveal"><div class="travel-icon">🏨</div><h3>Nearby Hotels</h3>
+            <ul><li>Hotel Rajadhani — 2.5 km</li><li>Hotel Maria — 3 km</li><li>Sea Breeze Inn — 4 km</li></ul>
+            <p class="travel-note">Mention "Sajil &amp; Jino Wedding" for special rates.</p></div>
+          <div class="travel-card reveal"><div class="travel-icon">🚗</div><h3>Getting There</h3>
+            <ul><li>✈ Trivandrum Airport — 75 km</li><li>🚉 Nagercoil Jn — 5 km</li><li>🚌 Local cabs &amp; autos available</li></ul>
+            <p class="travel-note">Shuttle service from Nagercoil Junction on the wedding morning.</p></div>
+          <div class="travel-card reveal"><div class="travel-icon">📞</div><h3>Need Help?</h3>
+            <ul><li>Reception Desk: +91 98765 43210</li><li>Hospitality: +91 98765 12345</li></ul>
+            <p class="travel-note">Our family will be happy to assist with anything you need.</p></div>
         </div>
       </div>
     </section>
+
+    <div class="floral-divider" aria-hidden="true"><span></span><i>❧</i><span></span></div>
 
     <!-- ===== WEDDING WISHES ===== -->
     <section class="section wishes" id="wishes">
@@ -500,6 +424,7 @@
       Thank you for being a cherished part of our journey.<br>
       Your love, prayers and blessings mean the world to us.
     </p>
+    <p class="footer-tamil">உங்கள் வருகையை எதிர்பார்க்கிறோம் · நன்றி 🙏</p>
     <p class="footer-hashtag">#SajilWedsJino</p>
     <div class="footer-contact">
       <a href="tel:+919876543210">📞 +91 98765 43210</a>
