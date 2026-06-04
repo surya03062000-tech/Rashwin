@@ -274,48 +274,6 @@
   $("#heroCalendar") && $("#heroCalendar").addEventListener("click", openCalendar);
   $("#addCalendar")  && $("#addCalendar").addEventListener("click", openCalendar);
 
-  /* =========================================================
-     GALLERY + LIGHTBOX
-     ========================================================= */
-  const photoIds = [
-    "1519741497674-611481863552","1606800052052-a08af7148866","1583939003579-730e3918a45a",
-    "1511285560929-80b456fea0bc","1465495976277-4387d4b0b4c6","1522673607200-164d1b6ce486",
-    "1537633552985-df8429e8048b","1530653333484-8e3c6c1c3a1f",
-  ];
-  const imgUrls = photoIds.map(id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=700&q=80`);
-  const grid = $("#galleryGrid");
-  imgUrls.forEach((url, i) => {
-    const fig = document.createElement("figure");
-    fig.className = "reveal";
-    fig.tabIndex = 0; fig.setAttribute("role","button"); fig.setAttribute("aria-label", `View photo ${i+1}`);
-    const img = document.createElement("img");
-    img.src = url; img.alt = `Wedding gallery photo ${i+1}`; img.loading = "lazy"; img.decoding = "async";
-    fig.appendChild(img);
-    fig.addEventListener("click", () => open(i));
-    fig.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); } });
-    grid.appendChild(fig);
-  });
-  $$(".gallery-grid figure.reveal").forEach(el => io.observe(el));
-
-  const lb = $("#lightbox"), lbImg = $("#lbImg");
-  let idx = 0;
-  lbImg.style.transition = "opacity .16s ease";
-  function open(i){ idx=i; lbImg.src=imgUrls[i]; lb.classList.add("open"); lb.setAttribute("aria-hidden","false"); }
-  function close(){ lb.classList.remove("open"); lb.setAttribute("aria-hidden","true"); }
-  function step2(d){ idx=(idx+d+imgUrls.length)%imgUrls.length; lbImg.style.opacity="0"; setTimeout(()=>{lbImg.src=imgUrls[idx];lbImg.style.opacity="1";},160); }
-  $("#lbClose").addEventListener("click", close);
-  $("#lbNext").addEventListener("click", () => step2(1));
-  $("#lbPrev").addEventListener("click", () => step2(-1));
-  lb.addEventListener("click", e => { if (e.target === lb) close(); });
-  let tx = 0;
-  lb.addEventListener("touchstart", e => tx = e.touches[0].clientX, { passive:true });
-  lb.addEventListener("touchend",   e => { const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) step2(dx < 0 ? 1 : -1); }, { passive:true });
-  document.addEventListener("keydown", e => {
-    if (!lb.classList.contains("open")) return;
-    if (e.key === "Escape") close();
-    if (e.key === "ArrowRight") step2(1);
-    if (e.key === "ArrowLeft") step2(-1);
-  });
 
   /* =========================================================
      WEDDING WISHES (localStorage)
@@ -349,6 +307,21 @@
     w.push({ name, msg });
     localStorage.setItem(KEY, JSON.stringify(w));
     renderWishes(w); wishForm.reset();
+    /* notify the couple via email */
+    const subject = encodeURIComponent("Wedding Wish from " + name + " — #SajilWedsJino");
+    const body    = encodeURIComponent("From: " + name + "\n\n" + msg + "\n\n—\nSent from the wedding invitation website.");
+    const a = document.createElement("a");
+    a.href = "mailto:sajiljino.wedding@gmail.com?subject=" + subject + "&body=" + body;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    /* brief confirmation toast */
+    const toast = document.createElement("div");
+    toast.textContent = "✓ Wish sent! Your blessing means the world to them.";
+    toast.style.cssText = "position:fixed;bottom:max(90px,calc(20px + env(safe-area-inset-bottom)));left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7a1f2b,#5a1620);color:#e6c66b;padding:12px 22px;border-radius:30px;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:500;letter-spacing:.5px;box-shadow:0 10px 28px -8px rgba(90,22,32,.6);z-index:9999;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .4s";
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => { toast.style.opacity = "1"; setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => toast.remove(), 400); }, 3200); });
   });
   loadWishes();
 
