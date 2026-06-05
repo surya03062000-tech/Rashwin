@@ -8,9 +8,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <!-- SEO -->
-  <title>Sajil ❤️ Jino — Wedding Invitation | 02 July 2026</title>
-  <meta name="description" content="With the blessings of our parents, Sajil & Jino joyfully invite you to celebrate their wedding on Thursday, 02 July 2026 at Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil." />
-  <meta name="keywords" content="Sajil weds Jino, wedding invitation, Christian wedding, Holy Family Church Nagercoil, 02 July 2026" />
+  <title>Sajil ❤️ Jino — Engagement Invitation | 01 July 2026</title>
+  <meta name="description" content="With the blessings of our parents, Sajil & Jino joyfully invite you to their Engagement Ceremony on Wednesday, 01 July 2026 at St. Antony's Community Hall, Kurusady, Nagercoil." />
+  <meta name="keywords" content="Sajil weds Jino, engagement invitation, Christian wedding, St. Antony's Community Hall Nagercoil, 01 July 2026" />
   <meta name="author" content="Sajil & Jino" />
   <link rel="canonical" href="https://sajil-jino-wedding.vercel.app/" />
 
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Sajil ❤️ Jino Wedding" />
   <meta property="og:title" content="Sajil ❤️ Jino — Wedding Invitation" />
-  <meta property="og:description" content="Together with our families, we invite you to our Holy Matrimony · Thursday, 02 July 2026 · Holy Family Church, Nagercoil." />
+  <meta property="og:description" content="Together with our families, we invite you to our Engagement Ceremony · Wednesday, 01 July 2026 · St. Antony's Community Hall, Nagercoil." />
   <meta property="og:image" content="https://sajil-jino-wedding.vercel.app/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -32,7 +32,7 @@
   <!-- Fonts (Latin + Tamil) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Noto+Serif+Tamil:wght@400;500;600&family=Catamaran:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Marcellus&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Noto+Serif+Tamil:wght@400;500;600&family=Catamaran:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -95,9 +95,9 @@
         <span class="gate-amp">❤</span>
         <span class="gate-n2">Jino</span>
       </h2>
-      <p class="gate-verse">"What God has joined together, let no one separate"</p>
-      <p class="gate-date">Thursday · 02 July 2026</p>
-      <p class="gate-venue">Holy Family Church · Nagercoil</p>
+      <p class="gate-verse">"Two souls, one heart — joined by God's grace"</p>
+      <p class="gate-date">Wednesday · 01 July 2026</p>
+      <p class="gate-venue">St. Antony's Hall · Nagercoil</p>
       <button class="gate-btn" id="openInvite" aria-label="Open the wedding invitation">
         <span class="gate-btn-text">Open Invitation</span>
         <span class="gate-btn-icon" aria-hidden="true">❧</span>
@@ -109,9 +109,15 @@
   <div class="petals" id="petals" aria-hidden="true"></div>
 
   <!-- ===== Floating controls ===== -->
-  <button class="fab music-fab" id="musicToggle" aria-label="Toggle background music" title="Play music">
-    <span class="music-icon">♪</span>
-  </button>
+  <div class="music-dock" id="musicDock">
+    <button class="fab music-fab" id="musicToggle" aria-label="Play music" title="Play music">
+      <span class="music-icon">♪</span>
+    </button>
+    <div class="music-panel" id="musicPanel">
+      <button class="music-mini" id="muteToggle" aria-label="Mute music" title="Mute">🔊</button>
+      <input class="vol-slider" id="volSlider" type="range" min="0" max="100" value="45" aria-label="Volume" />
+    </div>
+  </div>
   <a class="fab whatsapp-fab" id="shareWhatsApp" aria-label="Share on WhatsApp" title="Share on WhatsApp" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.157 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.516 5.26l-.999 3.648 3.972-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
   </a>
@@ -162,9 +168,9 @@
         <p class="hero-verse">"Therefore what God has joined together, let no one separate." — Mark 10:9</p>
         <p class="hero-tamil">கடவுளின் ஆசீர்வாதத்துடன் எங்கள் திருமணத்திற்கு அன்புடன் அழைக்கிறோம்</p>
         <div class="hero-date">
-          <span>Thursday</span>
-          <strong>02 · 07 · 2026</strong>
-          <span>Holy Family Church · Nagercoil</span>
+          <span>Wednesday</span>
+          <strong>01 · 07 · 2026</strong>
+          <span>St. Antony's Community Hall · Nagercoil</span>
         </div>
 
         <div class="countdown" id="countdown" aria-label="Countdown to the wedding">
@@ -206,9 +212,9 @@
         <p class="lead-tamil">கடவுளின் அருளோடும், எங்கள் பெற்றோரின் ஆசீர்வாதத்தோடும், எங்கள் திருமண நல்வாழ்வில் பங்கேற்க உங்களை அன்புடன் அழைக்கிறோம்.</p>
         <h3 class="couple-line">Sajil &amp; Jino</h3>
         <div class="welcome-meta">
-          <div><strong>When</strong><span>Thursday, 02 July 2026 · 10:30 AM</span></div>
+          <div><strong>When</strong><span>Wednesday, 01 July 2026 · 10:30 AM</span></div>
           <div class="divider-dot" aria-hidden="true"></div>
-          <div><strong>Where</strong><span>Holy Family Church, Carmel Nagar,<br>Ramanputhur, Nagercoil</span></div>
+          <div><strong>Where</strong><span>St. Antony's Community Hall,<br>Kurusady, Nagercoil</span></div>
         </div>
         <p class="blessing">With the blessings of our parents 🙏</p>
       </div>
@@ -226,7 +232,7 @@
           <p class="section-sub">Download our card to share on WhatsApp, or add the day straight to your calendar.</p>
         </div>
         <div class="savedate-card reveal">
-          <img src="assets/save-the-date.png" alt="Sajil and Jino Save the Date — 02 July 2026, Holy Family Church Nagercoil" loading="lazy" />
+          <img src="assets/save-the-date.png" alt="Sajil and Jino Save the Date — 01 July 2026, St. Antony's Community Hall Nagercoil" loading="lazy" />
         </div>
         <div class="savedate-actions reveal">
           <a class="btn-primary" id="downloadCard" href="assets/save-the-date.png" download="Sajil-Jino-Save-the-Date.png">⬇ Download Card</a>
@@ -243,16 +249,22 @@
       <div class="container">
         <div class="section-head reveal">
           <span class="kicker">Join Us For</span>
-          <h2 class="serif-title">The Wedding</h2>
-          <p class="section-sub">Be part of these sacred and joyful celebrations as we begin our journey together.</p>
+          <h2 class="serif-title">The Celebration</h2>
+          <p class="section-sub">With hearts full of joy, we invite you to share in our special day.</p>
         </div>
-        <div class="event-grid">
-          <article class="event-card reveal"><div class="event-icon">💍</div><h3>Engagement</h3>
-            <p class="event-when">Sat, 20 June 2026 · 6:00 PM</p><p class="event-venue">Grace Hall, Nagercoil</p>
-            <p class="event-desc">An intimate evening as we exchange rings and seal our promise before family and close friends.</p></article>
-<article class="event-card reveal featured"><div class="event-icon">⛪</div><h3>Holy Matrimony</h3>
-            <p class="event-when">Thu, 02 July 2026 · 10:30 AM</p><p class="event-venue">Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil</p>
-            <p class="event-desc">The sacred Nuptial Mass where we exchange our vows and receive God's blessing on our marriage.</p></article>
+        <div class="engagement-wrap">
+          <article class="engagement-card reveal">
+            <div class="ec-glow" aria-hidden="true"></div>
+            <div class="ec-ring" aria-hidden="true">💍</div>
+            <span class="ec-tag">With God's Blessings</span>
+            <h3 class="ec-title">Engagement Ceremony</h3>
+            <div class="ec-divider" aria-hidden="true"><span></span><i>♥</i><span></span></div>
+            <ul class="ec-details">
+              <li><span class="ec-ic" aria-hidden="true">📅</span><div><strong>Date</strong><p>July 1<sup>st</sup>, 2026</p></div></li>
+              <li><span class="ec-ic" aria-hidden="true">⏰</span><div><strong>Time</strong><p>10:30 AM</p></div></li>
+              <li><span class="ec-ic" aria-hidden="true">⛪</span><div><strong>Venue</strong><p>St. Antony's Community Hall<br>Kurusady, Nagercoil</p></div></li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
@@ -269,14 +281,14 @@
         <div class="family-grid">
           <div class="family-card reveal">
             <span class="family-tag">The Groom</span><h3>Sajil</h3>
-            <p class="family-parents">Son of</p><p class="family-names">Mr. &amp; Mrs. Anthony</p>
-            <p class="family-of">Ramanputhur, Nagercoil</p>
+            <p class="family-parents">Son of</p><p class="family-names">Mr. Anthony &amp; Mrs. Betil</p>
+            <p class="family-of">Konam, Nagercoil</p>
           </div>
           <div class="family-emblem reveal"><div class="family-cross">✚</div><p>United in faith<br>&amp; love</p></div>
           <div class="family-card reveal">
             <span class="family-tag">The Bride</span><h3>Jino</h3>
-            <p class="family-parents">Daughter of</p><p class="family-names">Mr. &amp; Mrs. Joseph</p>
-            <p class="family-of">Carmel Nagar, Nagercoil</p>
+            <p class="family-parents">Daughter of</p><p class="family-names">Mr. Johnson &amp; Mrs. Jesindha</p>
+            <p class="family-of">Colachel</p>
           </div>
         </div>
         <p class="family-blessing reveal">
@@ -297,19 +309,19 @@
         </div>
         <div class="venue-wrap reveal">
           <div class="venue-info">
-            <h3>Holy Family Church</h3>
-            <p class="venue-addr">Carmel Nagar, Ramanputhur,<br>Nagercoil, Tamil Nadu</p>
-            <p class="venue-time">⛪ Holy Matrimony · Thursday, 02 July 2026 · 10:30 AM</p>
-            <p class="venue-note">Ample parking is available near the church. Kindly arrive by 10:00 AM to be seated before the ceremony begins.</p>
+            <h3>St. Antony's Community Hall</h3>
+            <p class="venue-addr">Kurusady,<br>Nagercoil, Tamil Nadu</p>
+            <p class="venue-time">💍 Engagement Ceremony · July 1<sup>st</sup>, 2026 · 10:30 AM</p>
+            <p class="venue-note">Ample parking is available nearby. Kindly arrive by 10:00 AM to be seated before the ceremony begins.</p>
             <a class="btn-primary" id="directionsBtn" target="_blank" rel="noopener">Get Directions →</a>
             <div class="venue-qr">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2F%3Fapi%3D1%26query%3DHoly%2BFamily%2BChurch%2BCarmel%2BNagar%2BRamanputhur%2BNagercoil" alt="Scan QR code to navigate to Holy Family Church" width="130" height="130" loading="lazy" />
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2F%3Fapi%3D1%26query%3DSt%2BAntony%2527s%2BCommunity%2BHall%2BKurusady%2BNagercoil" alt="Scan QR code to navigate to St. Antony's Community Hall" width="130" height="130" loading="lazy" />
               <p class="venue-qr-label">Scan to navigate</p>
             </div>
           </div>
           <div class="venue-map">
-            <iframe title="Holy Family Church Location"
-              src="https://www.google.com/maps?q=Holy%20Family%20Church%20Carmel%20Nagar%20Ramanputhur%20Nagercoil&output=embed"
+            <iframe title="St. Antony's Community Hall Location"
+              src="https://www.google.com/maps?q=St%20Antony%27s%20Community%20Hall%20Kurusady%20Nagercoil&output=embed"
               loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
@@ -325,16 +337,16 @@
           <span class="kicker">Plan your stay</span>
           <h2 class="serif-title">Travel &amp; Accommodation</h2>
         </div>
-        <div class="travel-grid">
-          <div class="travel-card reveal"><div class="travel-icon">🏨</div><h3>Nearby Hotels</h3>
-            <ul><li>Hotel Rajadhani — 2.5 km</li><li>Hotel Maria — 3 km</li><li>Sea Breeze Inn — 4 km</li></ul>
-            <p class="travel-note">Mention "Sajil &amp; Jino Wedding" for special rates.</p></div>
+        <div class="travel-grid two">
           <div class="travel-card reveal"><div class="travel-icon">🚗</div><h3>Getting There</h3>
             <ul><li>✈ Trivandrum Airport — 75 km</li><li>🚉 Nagercoil Jn — 5 km</li><li>🚌 Local cabs &amp; autos available</li></ul>
-            <p class="travel-note">Shuttle service from Nagercoil Junction on the wedding morning.</p></div>
-          <div class="travel-card reveal"><div class="travel-icon">📞</div><h3>Need Help?</h3>
-            <ul><li>Reception Desk: +91 98765 43210</li><li>Hospitality: +91 98765 12345</li></ul>
-            <p class="travel-note">Our family will be happy to assist with anything you need.</p></div>
+            <p class="travel-note">Local transport is easily available across Nagercoil.</p></div>
+          <div class="travel-card contact-card reveal"><div class="travel-icon">📞</div><h3>For Queries</h3>
+            <div class="contact-numbers">
+              <a class="contact-pill" href="tel:+919944002502"><span aria-hidden="true">📞</span>+91 99440 02502</a>
+              <a class="contact-pill" href="tel:+918925732112"><span aria-hidden="true">📞</span>+91 89257 32112</a>
+            </div>
+            <p class="travel-note">We're happy to help with anything you need.</p></div>
         </div>
       </div>
     </section>
@@ -347,14 +359,17 @@
         <div class="section-head reveal">
           <span class="kicker">Share Your Love</span>
           <h2 class="serif-title">Wedding Wishes</h2>
-          <p class="section-sub">Leave a heartfelt blessing for Sajil &amp; Jino to treasure forever.</p>
+          <p class="section-sub">Send a heartfelt blessing — your message goes straight to the couple.</p>
         </div>
         <form class="wish-form glass reveal" id="wishForm">
           <input type="text" id="wishName" placeholder="Your name" required autocomplete="name" />
           <textarea id="wishMsg" rows="3" placeholder="Write your wish or blessing…" required></textarea>
-          <button type="submit" class="btn-primary">Post Your Wish</button>
+          <button type="submit" class="btn-primary" id="wishSubmit">Send Your Wish</button>
         </form>
-        <div class="wish-list" id="wishList"></div>
+        <div class="wish-success" id="wishSuccess" aria-live="polite" hidden>
+          <div class="wish-success-ic" aria-hidden="true">💌</div>
+          <p>Thank you for your wishes.<br>Your message has been received.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -378,7 +393,7 @@
       <a href="#" aria-label="Facebook" target="_blank" rel="noopener">Facebook</a>
       <a id="footerShare" aria-label="Share on WhatsApp" target="_blank" rel="noopener">WhatsApp</a>
     </div>
-    <p class="footer-date">02 · 07 · 2026 · Holy Family Church, Nagercoil</p>
+    <p class="footer-date">01 · 07 · 2026 · St. Antony's Community Hall, Nagercoil</p>
     <p class="footer-credit">Made with ❤️ for our special day</p>
   </footer>
 

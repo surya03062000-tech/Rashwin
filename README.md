@@ -1,8 +1,8 @@
-# Sajil ❤️ Jino — Wedding Invitation Website
+# Sajil ❤️ Jino — Engagement Invitation Website
 
-A premium, mobile-first digital wedding invitation for the Christian wedding of
-**Sajil & Jino**, celebrating their Holy Matrimony on **Thursday, 02 July 2026**
-at **Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil**.
+A premium, mobile-first digital invitation for the Christian engagement of
+**Sajil & Jino**, celebrating their Engagement Ceremony on **Wednesday, 01 July 2026**
+at **St. Antony's Community Hall, Kurusady, Nagercoil**.
 
 Fast, SEO-friendly static site (HTML · CSS · vanilla JS) — no build step — ready
 to deploy to **Vercel**.
@@ -12,15 +12,17 @@ to deploy to **Vercel**.
 - **Cinematic 3D entrance** — loader → invitation card with a wax seal → twin
   doors swing open in 3D with radiant light-rays and a golden sparkle burst
 - **Bilingual** — elegant Tamil (Noto Serif Tamil) alongside English throughout
-- **Live countdown** to the ceremony (02 Jul 2026, 10:30 AM IST)
-- **Built-in background music** — a gentle synthesised *Canon in D* plays via the
-  Web Audio API (no file needed); drop in `assets/music.mp3` to use your own track
-- **Save the Date** section — downloadable share card + WhatsApp share
+- **Live countdown** to the ceremony (01 Jul 2026, 10:30 AM IST) in a luxury Cinzel face
+- **Background music** — an elegant Tamil/Indian *Mangala Vadyam* (Mohanam raga)
+  instrumental synthesised via the Web Audio API (no file needed) with play/pause,
+  volume slider, mute and smooth fade-in/out; drop in `assets/music.mp3` to use your own track
+- **Save the Date** section — premium gold/cream/white card, downloadable + WhatsApp share
 - **Add to Calendar** — one tap adds the ceremony to Google Calendar
-- **Floating flower petals**, floating nav, WhatsApp share button
-- Sections: Welcome · Save the Date · Our Story · Wedding Events · Family ·
-  Venue (Google Maps + directions) · Gallery (lightbox + swipe) · Travel ·
-  Wedding Wishes · Footer
+- **Floating flower petals + bright-red floating hearts**, floating nav, WhatsApp share
+- **Private Wedding Wishes** — guest messages are emailed to the couple (FormSubmit,
+  with a `mailto:` fallback); not shown publicly
+- Sections: Welcome · Save the Date · The Celebration · Family ·
+  Venue (Google Maps + directions + QR) · Travel & Queries · Wedding Wishes · Footer
 - Royal gold / ivory / maroon / blush palette, glassmorphism, floral dividers,
   scroll reveals, mandala motifs
 - **Fully responsive** — phones, tablets, iPad, laptop, desktop; iOS safe-area
