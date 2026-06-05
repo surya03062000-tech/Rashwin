@@ -29,6 +29,10 @@
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
+  <!-- Perf: warm up the hero/gate backdrop early -->
+  <link rel="preload" as="image" href="assets/hero.jpg" />
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80" />
+
   <!-- Fonts (Latin + Tamil) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,6 +41,8 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <a class="skip-link" href="#welcome">Skip to content</a>
 
   <!-- ===== Entrance / Loader ===== -->
   <div class="loader" id="loader">
@@ -115,7 +121,6 @@
     </button>
     <div class="music-panel" id="musicPanel">
       <button class="music-mini" id="muteToggle" aria-label="Mute music" title="Mute">🔊</button>
-      <input class="vol-slider" id="volSlider" type="range" min="0" max="100" value="45" aria-label="Volume" />
     </div>
   </div>
   <a class="fab whatsapp-fab" id="shareWhatsApp" aria-label="Share on WhatsApp" title="Share on WhatsApp" target="_blank" rel="noopener">
@@ -401,6 +406,8 @@
     <source src="assets/music.mp3" type="audio/mpeg" />
   </audio>
 
-  <script src="script.js"></script>
+  <!-- Optional: wishes via EmailJS (fill keys in script.js → EMAILJS) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

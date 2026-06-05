@@ -34,6 +34,17 @@ body::before{
     radial-gradient(circle at 50% 50%,var(--ivory),var(--cream));
 }
 
+/* ============ ACCESSIBILITY ============ */
+.skip-link{position:fixed;top:-60px;left:12px;z-index:10001;background:var(--maroon);color:var(--gold-light);
+  padding:10px 18px;border-radius:0 0 12px 12px;font-family:var(--sans);font-size:.85rem;font-weight:600;
+  letter-spacing:.5px;transition:top .3s}
+.skip-link:focus{top:0;outline:2px solid var(--gold-light);outline-offset:2px}
+:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px;border-radius:6px}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
+
+/* ============ PERFORMANCE: skip rendering offscreen sections ============ */
+.section{content-visibility:auto;contain-intrinsic-size:auto 700px}
+
 /* ============ TAMIL TEXT ACCENTS ============ */
 .tamil-kicker{font-family:var(--tamil);color:var(--gold-deep);font-size:clamp(1.1rem,3.5vw,1.5rem);font-weight:500;margin-bottom:2px}
 .lead-tamil{font-family:var(--tamil);color:var(--muted);font-size:clamp(.95rem,2.6vw,1.12rem);max-width:640px;margin:10px auto 4px;line-height:2}
@@ -58,7 +69,12 @@ body::before{
   position:fixed;inset:0;z-index:9000;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
   padding:max(20px,var(--sat)) 20px max(20px,var(--sab));
-  background:#2a0a11;
+  /* the attached photo is revealed behind the doors as they open */
+  background:
+    linear-gradient(rgba(20,4,8,.55),rgba(20,4,8,.78)),
+    url('assets/hero.jpg') center/cover no-repeat,
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat,
+    #2a0a11;
   transition:opacity .6s ease 1.4s,visibility .6s ease 1.4s;
   perspective:1700px;
 }
@@ -203,7 +219,13 @@ body::before{
 
 /* ============ HERO ============ */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--ivory);overflow:hidden}
-.hero-bg{position:absolute;inset:-6%;z-index:0;background:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;animation:kenBurns 24s ease-in-out infinite alternate;will-change:transform}
+/* Hero backdrop = your attached photo (assets/hero.jpg).
+   Until that file exists, the Unsplash layer underneath shows through. */
+.hero-bg{position:absolute;inset:-6%;z-index:0;
+  background:
+    url('assets/hero.jpg') center/cover no-repeat,
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  animation:kenBurns 24s ease-in-out infinite alternate;will-change:transform}
 @keyframes kenBurns{0%{transform:scale(1) translate(0,0)}33%{transform:scale(1.07) translate(-1.5%,1%)}66%{transform:scale(1.05) translate(1.5%,-1%)}100%{transform:scale(1.1) translate(-.5%,.5%)}}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% 42%,rgba(40,12,18,.35) 0%,rgba(40,12,18,.72) 100%),linear-gradient(180deg,rgba(40,12,18,.3) 0%,rgba(40,12,18,.5) 50%,rgba(40,12,18,.7) 100%)}
 .hero-shimmer{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(230,198,107,.06) 50%,transparent 70%);animation:heroShimmer 6s ease-in-out infinite}

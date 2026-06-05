@@ -75,6 +75,36 @@
   }
 
   /* =========================================================
+     FLOWER / CONFETTI SHOWER  (engagement reveal · celebration)
+     ========================================================= */
+  function flowerShower(count, duration) {
+    if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const glyphs = ["🌸","🌹","❀","✿","❤","🤍","💛","✦","🌼"];
+    const layer = document.createElement("div");
+    layer.setAttribute("aria-hidden", "true");
+    layer.style.cssText = "position:fixed;inset:0;z-index:9600;pointer-events:none;overflow:hidden";
+    document.body.appendChild(layer);
+    const n = count || 36, life = duration || 2600;
+    for (let i = 0; i < n; i++) {
+      const el = document.createElement("span");
+      el.textContent = glyphs[(Math.random() * glyphs.length) | 0];
+      const startX = Math.random() * 100;
+      el.style.cssText =
+        `position:absolute;top:-8%;left:${startX}vw;font-size:${14 + Math.random()*22}px;` +
+        `will-change:transform,opacity;user-select:none`;
+      layer.appendChild(el);
+      const drift = (Math.random() * 2 - 1) * 28;
+      el.animate(
+        [{ transform: "translateY(-10vh) translateX(0) rotate(0)", opacity: 0 },
+         { opacity: 1, offset: 0.12 },
+         { transform: `translateY(108vh) translateX(${drift}vw) rotate(${(Math.random()*720-360)|0}deg)`, opacity: 0 }],
+        { duration: life + Math.random() * 1400, easing: "cubic-bezier(.3,.5,.5,1)", fill: "forwards", delay: Math.random() * 600 }
+      );
+    }
+    setTimeout(() => layer.remove(), life + 2200);
+  }
+
+  /* =========================================================
      FLOATING PETALS
      ========================================================= */
   (function () {
@@ -139,11 +169,21 @@
      ========================================================= */
   const cd = { d:$("#cd-days"), h:$("#cd-hours"), m:$("#cd-mins"), s:$("#cd-secs") };
   const pad = n => String(n).padStart(2,"0");
+  function celebrate() {
+    $("#countdown").innerHTML =
+      '<p style="font-family:Great Vibes,cursive;font-size:clamp(1.6rem,6vw,2.6rem);color:#fff;text-align:center">We are engaged! 🎉 God bless us!</p>';
+    /* a joyful repeating flower-shower */
+    flowerShower(60, 3200);
+    let bursts = 0;
+    const party = setInterval(() => {
+      flowerShower(40, 3000);
+      if (++bursts >= 6) clearInterval(party);
+    }, 2600);
+  }
   function tick() {
     const diff = WEDDING_DATE - new Date();
     if (diff <= 0) {
-      $("#countdown").innerHTML =
-        '<p style="font-family:Great Vibes,cursive;font-size:clamp(1.4rem,5vw,2rem);color:#fff;text-align:center">We are engaged! 🎉 God bless us!</p>';
+      celebrate();
       clearInterval(timer); return;
     }
     const DAY=864e5, HR=36e5, MIN=6e4;
@@ -163,6 +203,15 @@
   );
   $$(".reveal").forEach(el => io.observe(el));
 
+  /* confetti / flower-shower when the engagement card appears */
+  const ecard = $(".engagement-card");
+  if (ecard) {
+    const ecObs = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { flowerShower(34, 2600); ecObs.unobserve(e.target); }
+    }), { threshold: 0.35 });
+    ecObs.observe(ecard);
+  }
+
   /* =========================================================
      BACKGROUND MUSIC  —  elegant Tamil/Indian wedding instrumental
      Uses assets/music.mp3 if present; otherwise plays a gentle
@@ -175,11 +224,13 @@
     const btn   = $("#musicToggle");
     const dock  = $("#musicDock");
     const muteBtn = $("#muteToggle");
-    const volEl = $("#volSlider");
 
-    let ctx, master, lp, playing = false, muted = false, usingFile = false,
-        schedTimer = null, step = 0, nextTime = 0, fadeLevel = 0, userVol = 0.45,
-        fileFade = null;
+    /* If you add a real Tamil instrumental, set MUSIC_FILE = "assets/music.mp3" */
+    const MUSIC_FILE = "";
+
+    let ctx, master, lp, perc, playing = false, muted = false, usingFile = false,
+        schedTimer = null, step = 0, nextTime = 0, fadeLevel = 0;
+    const userVol = 0.55;
 
     /* Mohanam raga (pentatonic) — a serene, auspicious South-Indian scale */
     const STEP   = 0.5;
@@ -207,20 +258,29 @@
       o.start(t); o2.start(t); o.stop(t + dur + 0.05); o2.stop(t + dur + 0.05);
     }
     function drones(t) {                                             // tanpura-like sustained drone
-      drone.forEach((n, i) => voice(freq(n), t, 4.2, 0.035, "sine"));
+      drone.forEach(n => voice(freq(n), t, 4.2, 0.04, "sine"));
+    }
+    function thavil(t) {                                             // soft thavil/percussion thump
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(58, t + 0.18);
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.09, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.26);
+      o.connect(g); g.connect(perc); o.start(t); o.stop(t + 0.3);
     }
 
     function scheduler() {
-      while (nextTime < ctx.currentTime + 0.2) {
+      while (nextTime < ctx.currentTime + 0.25) {
         const note = melody[step % melody.length];
-        voice(freq(note), nextTime, 0.7, 0.05);                     // lead
+        voice(freq(note), nextTime, 0.72, 0.06);                    // lead
         if (step % 8 === 0) drones(nextTime);                       // refresh drone
+        if (step % 2 === 0) thavil(nextTime);                       // gentle beat
         if (step % 4 === 2 && Math.random() > 0.5)                  // soft shimmer bell
-          voice(freq(note) * 2, nextTime, 1.1, 0.012, "triangle");
+          voice(freq(note) * 2, nextTime, 1.1, 0.014, "triangle");
         nextTime += STEP;
         step = (step + 1) % (melody.length * 2);
       }
-      schedTimer = setTimeout(scheduler, 40);
+      schedTimer = setTimeout(scheduler, 45);
     }
 
     function applyGain(dur) {
@@ -228,33 +288,37 @@
       const v = (muted ? 0 : userVol) * fadeLevel;
       master.gain.cancelScheduledValues(ctx.currentTime);
       master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), ctx.currentTime);
-      master.gain.linearRampToValueAtTime(v, ctx.currentTime + (dur || 0.3));
+      master.gain.linearRampToValueAtTime(Math.max(0.0001, v), ctx.currentTime + (dur || 0.3));
     }
 
     function startSynth() {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
       ctx = new AC();
+      if (ctx.state === "suspended") ctx.resume();                  // ← key fix: unlock on gesture
       master = ctx.createGain(); master.gain.value = 0.0001;
-      lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2200;
+      lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2300;
+      perc = ctx.createGain(); perc.gain.value = 1;                 // percussion bus (dry)
       const delay = ctx.createDelay(); delay.delayTime.value = 0.34;
       const fb = ctx.createGain(); fb.gain.value = 0.3;
       const wet = ctx.createGain(); wet.gain.value = 0.28;
       lp.connect(master);
       lp.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
+      perc.connect(master);
       master.connect(ctx.destination);
       step = 0; nextTime = ctx.currentTime + 0.12;
       scheduler();
-      fadeLevel = 1; applyGain(2.2);                                 // smooth fade-in
+      fadeLevel = 1; applyGain(2.0);                                 // smooth fade-in
       usingFile = false; playing = true; setBtn(true);
     }
     function stopSynth() {
       fadeLevel = 0; applyGain(1.2);                                 // smooth fade-out
       if (schedTimer) clearTimeout(schedTimer);
-      setTimeout(() => { try { ctx && ctx.close(); } catch (_) {} ctx = master = null; }, 1400);
+      setTimeout(() => { try { ctx && ctx.close(); } catch (_) {} ctx = master = perc = null; }, 1400);
     }
 
     /* ---- file (mp3) path with manual volume fade ---- */
+    let fileFade = null;
     function fadeFile(target, dur, after) {
       clearInterval(fileFade);
       const start = audioEl.volume, t0 = performance.now();
@@ -274,19 +338,22 @@
     }
     function setMuteBtn() {
       if (!muteBtn) return;
-      const off = muted || userVol === 0;
-      muteBtn.textContent = off ? "🔇" : "🔊";
-      muteBtn.title = off ? "Unmute" : "Mute";
-      muteBtn.setAttribute("aria-label", off ? "Unmute music" : "Mute music");
+      muteBtn.textContent = muted ? "🔇" : "🔊";
+      muteBtn.title = muted ? "Unmute" : "Mute";
+      muteBtn.setAttribute("aria-label", muted ? "Unmute music" : "Mute music");
     }
 
     function start() {
       if (playing) return;
       dock.classList.add("open");
-      audioEl.volume = 0;
-      audioEl.play()
-        .then(() => { usingFile = true; playing = true; setBtn(true); fadeFile(muted ? 0 : userVol, 1.4); })
-        .catch(() => { startSynth(); });                            // no file → synth
+      if (MUSIC_FILE) {                                              // real track if provided
+        audioEl.volume = 0;
+        audioEl.play()
+          .then(() => { usingFile = true; playing = true; setBtn(true); fadeFile(muted ? 0 : userVol, 1.4); })
+          .catch(() => startSynth());
+      } else {
+        startSynth();                                               // synth runs in the gesture
+      }
     }
     function stop() {
       if (!playing) return;
@@ -298,17 +365,9 @@
       if (usingFile) fadeFile(muted ? 0 : userVol, 0.4); else applyGain(0.4);
       setMuteBtn();
     }
-    function setVolume(v) {
-      userVol = Math.max(0, Math.min(1, v));
-      if (userVol > 0 && muted) muted = false;
-      if (!muted) { if (usingFile) audioEl.volume = userVol; else applyGain(0.15); }
-      setMuteBtn();
-    }
 
     btn.addEventListener("click", () => playing ? stop() : start());
     muteBtn && muteBtn.addEventListener("click", toggleMute);
-    volEl && volEl.addEventListener("input", e => setVolume(e.target.value / 100));
-    if (volEl) userVol = volEl.value / 100;
     setMuteBtn();
     return { start, stop };
   })();
@@ -322,8 +381,16 @@
   /* =========================================================
      WHATSAPP SHARE
      ========================================================= */
-  const shareUrl = "https://wa.me/?text=" + encodeURIComponent(
-    "You're invited to Sajil ❤️ Jino's Engagement Ceremony on 01 July 2026 at St. Antony's Community Hall, Nagercoil! View the invitation: " + SITE_URL);
+  const shareMsg =
+    "💍✨ *Sajil ❤️ Jino* ✨💍\n" +
+    "_With the blessings of our families_\n\n" +
+    "You are warmly invited to our *Engagement Ceremony* 🌸\n\n" +
+    "📅 Wednesday, 01 July 2026\n" +
+    "⏰ 10:30 AM\n" +
+    "⛪ St. Antony's Community Hall, Kurusady, Nagercoil\n\n" +
+    "🤍 Your presence & blessings will make our day complete.\n\n" +
+    "💌 View the full invitation:\n" + SITE_URL + "\n\n#SajilWedsJino";
+  const shareUrl = "https://wa.me/?text=" + encodeURIComponent(shareMsg);
   if ($("#shareWhatsApp")) $("#shareWhatsApp").href = shareUrl;
   if ($("#footerShare"))   $("#footerShare").href   = shareUrl;
   if ($("#shareCardWA"))   $("#shareCardWA").addEventListener("click", () => window.open(shareUrl, "_blank", "noopener"));
@@ -349,10 +416,23 @@
 
   /* =========================================================
      WEDDING WISHES  — private: emailed to the couple, not shown
+     Primary: EmailJS  ·  Fallback: FormSubmit  ·  Last: mailto
      ========================================================= */
   const wishForm = $("#wishForm"), wishSuccess = $("#wishSuccess"), wishSubmit = $("#wishSubmit");
   const WISH_TO  = "rashwinxavier6@gmail.com";
   const WISH_ENDPOINT = "https://formsubmit.co/ajax/" + WISH_TO;
+
+  /* ---- EmailJS config — fill these from your emailjs.com dashboard ---- */
+  const EMAILJS = {
+    publicKey:  "",     // e.g. "AbCdEf123..."
+    serviceId:  "",     // e.g. "service_xxx"
+    templateId: ""      // e.g. "template_xxx"
+  };
+  const emailjsReady = () =>
+    window.emailjs && EMAILJS.publicKey && EMAILJS.serviceId && EMAILJS.templateId;
+  if (window.emailjs && EMAILJS.publicKey) {
+    try { window.emailjs.init({ publicKey: EMAILJS.publicKey }); } catch (_) {}
+  }
 
   function showWishSuccess() {
     if (wishForm) { wishForm.hidden = true; wishForm.classList.add("sent"); }
@@ -366,6 +446,13 @@
     a.style.display = "none";
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
+  function sendViaFormSubmit(name, msg) {
+    return fetch(WISH_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ name, message: msg, _subject: "New Wedding Wish for Sajil & Jino", _template: "box" })
+    }).then(r => { if (!r.ok) throw new Error("send failed"); });
+  }
 
   wishForm && wishForm.addEventListener("submit", e => {
     e.preventDefault();
@@ -373,17 +460,15 @@
     if (!name || !msg) return;
     wishSubmit.classList.add("sending"); wishSubmit.textContent = "Sending…";
 
-    fetch(WISH_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        name: name,
-        message: msg,
-        _subject: "New Wedding Wish for Sajil & Jino",
-        _template: "box"
-      })
-    })
-      .then(r => { if (!r.ok) throw new Error("send failed"); showWishSuccess(); })
+    const send = emailjsReady()
+      ? window.emailjs.send(EMAILJS.serviceId, EMAILJS.templateId, {
+          from_name: name, message: msg, to_email: WISH_TO,
+          subject: "New Wedding Wish for Sajil & Jino"
+        })
+      : sendViaFormSubmit(name, msg);
+
+    send
+      .then(() => showWishSuccess())
       .catch(() => { mailtoFallback(name, msg); showWishSuccess(); });
   });
 
