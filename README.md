@@ -13,9 +13,12 @@ to deploy to **Vercel**.
   doors swing open in 3D with radiant light-rays and a golden sparkle burst
 - **Bilingual** — elegant Tamil (Noto Serif Tamil) alongside English throughout
 - **Live countdown** to the ceremony (01 Jul 2026, 10:30 AM IST) in a luxury Cinzel face
-- **Background music** — an elegant Tamil/Indian *Mangala Vadyam* (Mohanam raga)
-  instrumental synthesised via the Web Audio API (no file needed) with play/pause,
-  volume slider, mute and smooth fade-in/out; drop in `assets/music.mp3` to use your own track
+- **Background music** — an elegant Tamil/Indian *Mangala Vadyam* (Mohanam raga +
+  soft thavil beat) synthesised via the Web Audio API (no file needed) with
+  play/pause, mute and smooth fade-in/out. To use a real recording, set
+  `MUSIC_FILE = "assets/music.mp3"` in `script.js` and drop the file in.
+- **Confetti / flower-shower** when the engagement card appears and a full
+  celebration once the countdown reaches the big day
 - **Save the Date** section — premium gold/cream/white card, downloadable + WhatsApp share
 - **Add to Calendar** — one tap adds the ceremony to Google Calendar
 - **Floating flower petals + bright-red floating hearts**, floating nav, WhatsApp share
@@ -34,12 +37,16 @@ to deploy to **Vercel**.
 Editable details live at the top of `script.js`:
 
 ```js
-const WEDDING_DATE = new Date("2026-07-02T10:30:00+05:30");
-const VENUE_QUERY  = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
+const WEDDING_DATE = new Date("2026-07-01T10:30:00+05:30");
+const VENUE_QUERY  = "St Antony's Community Hall Kurusady Nagercoil";
 ```
 
+- **Hero photo** → drop your image at **`assets/hero.jpg`**. It is used as the
+  hero backdrop *and* revealed behind the 3D doors as they open. Until you add
+  it, a stock image shows in its place.
 - Names, dates, events, family, Tamil text → edit `index.html`.
-- Photos & music → see `assets/README.md`.
+- **Wishes email** → works out-of-the-box via FormSubmit (the owner confirms a
+  one-time activation email). For EmailJS instead, fill `EMAILJS` keys in `script.js`.
 - Footer phone / email / social links → edit `index.html`.
 
 ### Regenerating the share images (optional)
