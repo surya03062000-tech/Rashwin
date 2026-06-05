@@ -7,10 +7,10 @@
   "use strict";
 
   /* ----- Config ----- */
-  const WEDDING_DATE  = new Date("2026-07-02T10:30:00+05:30");
+  const WEDDING_DATE  = new Date("2026-07-01T10:30:00+05:30");
   const SITE_URL      = window.location.href;
-  const VENUE_QUERY   = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
-  const VENUE_FULL    = "Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil, Tamil Nadu";
+  const VENUE_QUERY   = "St Antony's Community Hall Kurusady Nagercoil";
+  const VENUE_FULL    = "St. Antony's Community Hall, Kurusady, Nagercoil, Tamil Nadu";
 
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -97,6 +97,30 @@
   })();
 
   /* =========================================================
+     FLOATING HEARTS  (bright red)
+     ========================================================= */
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const wrap = document.createElement("div");
+    wrap.className = "hearts"; wrap.setAttribute("aria-hidden", "true");
+    document.body.appendChild(wrap);
+    const glyphs = ["❤", "❤", "♥", "❥"];
+    const count  = window.innerWidth < 600 ? 9 : 16;
+    for (let i = 0; i < count; i++) {
+      const h = document.createElement("span");
+      h.className = "float-heart";
+      h.textContent = glyphs[i % glyphs.length];
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = 12 + Math.random() * 20 + "px";
+      h.style.opacity = (0.4 + Math.random() * 0.5).toFixed(2);
+      const dur = 10 + Math.random() * 12;
+      h.style.animationDuration = dur + "s";
+      h.style.animationDelay = -Math.random() * dur + "s";
+      wrap.appendChild(h);
+    }
+  })();
+
+  /* =========================================================
      NAVIGATION
      ========================================================= */
   const nav = $("#nav"), burger = $("#navBurger"), navClose = $("#navClose"),
@@ -119,7 +143,7 @@
     const diff = WEDDING_DATE - new Date();
     if (diff <= 0) {
       $("#countdown").innerHTML =
-        '<p style="font-family:Great Vibes,cursive;font-size:clamp(1.4rem,5vw,2rem);color:#fff;text-align:center">We are married! 🎉 God bless us!</p>';
+        '<p style="font-family:Great Vibes,cursive;font-size:clamp(1.4rem,5vw,2rem);color:#fff;text-align:center">We are engaged! 🎉 God bless us!</p>';
       clearInterval(timer); return;
     }
     const DAY=864e5, HR=36e5, MIN=6e4;
@@ -140,28 +164,30 @@
   $$(".reveal").forEach(el => io.observe(el));
 
   /* =========================================================
-     BACKGROUND MUSIC  —  gentle "Canon in D" synth
-     (falls back to assets/music.mp3 if you add the file)
+     BACKGROUND MUSIC  —  elegant Tamil/Indian wedding instrumental
+     Uses assets/music.mp3 if present; otherwise plays a gentle
+     synthesised "Mangala Vadyam" (Mohanam raga) — nadaswaram-style
+     lead over a tanpura-like drone.  Play/Pause · Volume · Mute ·
+     smooth fade-in / fade-out.
      ========================================================= */
   const Music = (function () {
     const audioEl = $("#bgMusic");
-    const btn = $("#musicToggle");
-    let ctx, master, delay, lp, playing = false, usingFile = false,
-        schedTimer = null, step = 0, nextTime = 0;
+    const btn   = $("#musicToggle");
+    const dock  = $("#musicDock");
+    const muteBtn = $("#muteToggle");
+    const volEl = $("#volSlider");
 
-    /* progression — Pachelbel Canon in D (public domain) */
-    const STEP = 0.42;                     // eighth-note length (s)
-    const arps = [
-      ["F#4","A4","D5","A4"], // D
-      ["E4","A4","C#5","A4"], // A
-      ["D4","F#4","B4","F#4"],// Bm
-      ["C#4","F#4","A4","F#4"],//F#m
-      ["D4","G4","B4","G4"],  // G
-      ["F#4","A4","D5","A4"], // D
-      ["D4","G4","B4","G4"],  // G
-      ["E4","A4","C#5","A4"], // A
-    ];
-    const bass = ["D2","A2","B2","F#2","G2","D2","G2","A2"];
+    let ctx, master, lp, playing = false, muted = false, usingFile = false,
+        schedTimer = null, step = 0, nextTime = 0, fadeLevel = 0, userVol = 0.45,
+        fileFade = null;
+
+    /* Mohanam raga (pentatonic) — a serene, auspicious South-Indian scale */
+    const STEP   = 0.5;
+    const melody = ["C4","D4","E4","G4","A4","G4","E4","D4",
+                    "E4","G4","A4","C5","A4","G4","E4","D4",
+                    "G4","A4","C5","D5","C5","A4","G4","E4",
+                    "C4","D4","E4","G4","E4","D4","C4","D4"];
+    const drone  = ["C2","G2"];
 
     const freq = n => {
       const m = { C:0,"C#":1,D:2,"D#":3,E:4,F:5,"F#":6,G:7,"G#":8,A:9,"A#":10,B:11 };
@@ -172,72 +198,118 @@
 
     function voice(f, t, dur, g, type) {
       const o = ctx.createOscillator(), o2 = ctx.createOscillator(), gain = ctx.createGain();
-      o.type = type || "triangle"; o.frequency.value = f;
-      o2.type = "sine"; o2.frequency.value = f; o2.detune.value = 5;
+      o.type = type || "sawtooth"; o.frequency.value = f;            // reedy nadaswaram-ish lead
+      o2.type = "sine"; o2.frequency.value = f; o2.detune.value = 6;
       o.connect(gain); o2.connect(gain); gain.connect(lp);
       gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(g, t + 0.05);
+      gain.gain.linearRampToValueAtTime(g, t + 0.08);
       gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
       o.start(t); o2.start(t); o.stop(t + dur + 0.05); o2.stop(t + dur + 0.05);
     }
+    function drones(t) {                                             // tanpura-like sustained drone
+      drone.forEach((n, i) => voice(freq(n), t, 4.2, 0.035, "sine"));
+    }
 
     function scheduler() {
-      while (nextTime < ctx.currentTime + 0.15) {
-        const chord = (step / 4) | 0 % arps.length;
-        const idx = step % 4;
-        const ci = chord % arps.length;
-        voice(freq(arps[ci][idx]), nextTime, 0.55, 0.06);      // arpeggio
-        if (idx === 0) voice(freq(bass[ci]), nextTime, 1.7, 0.05, "sine"); // bass
-        if (idx === 0 && Math.random() > 0.6)                  // soft sparkle bell
-          voice(freq(arps[ci][2]) * 2, nextTime, 0.9, 0.015, "sine");
+      while (nextTime < ctx.currentTime + 0.2) {
+        const note = melody[step % melody.length];
+        voice(freq(note), nextTime, 0.7, 0.05);                     // lead
+        if (step % 8 === 0) drones(nextTime);                       // refresh drone
+        if (step % 4 === 2 && Math.random() > 0.5)                  // soft shimmer bell
+          voice(freq(note) * 2, nextTime, 1.1, 0.012, "triangle");
         nextTime += STEP;
-        step = (step + 1) % (arps.length * 4);
+        step = (step + 1) % (melody.length * 2);
       }
-      schedTimer = setTimeout(scheduler, 30);
+      schedTimer = setTimeout(scheduler, 40);
+    }
+
+    function applyGain(dur) {
+      if (!master || !ctx) return;
+      const v = (muted ? 0 : userVol) * fadeLevel;
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), ctx.currentTime);
+      master.gain.linearRampToValueAtTime(v, ctx.currentTime + (dur || 0.3));
     }
 
     function startSynth() {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
       ctx = new AC();
-      master = ctx.createGain(); master.gain.value = 0;
-      lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2400;
-      delay = ctx.createDelay(); delay.delayTime.value = 0.33;
-      const fb = ctx.createGain(); fb.gain.value = 0.28;
-      const wet = ctx.createGain(); wet.gain.value = 0.25;
+      master = ctx.createGain(); master.gain.value = 0.0001;
+      lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2200;
+      const delay = ctx.createDelay(); delay.delayTime.value = 0.34;
+      const fb = ctx.createGain(); fb.gain.value = 0.3;
+      const wet = ctx.createGain(); wet.gain.value = 0.28;
       lp.connect(master);
       lp.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
       master.connect(ctx.destination);
-      master.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 2);  // gentle fade-in
-      step = 0; nextTime = ctx.currentTime + 0.1;
+      step = 0; nextTime = ctx.currentTime + 0.12;
       scheduler();
-      playing = true; setBtn(true);
+      fadeLevel = 1; applyGain(2.2);                                 // smooth fade-in
+      usingFile = false; playing = true; setBtn(true);
     }
     function stopSynth() {
+      fadeLevel = 0; applyGain(1.2);                                 // smooth fade-out
       if (schedTimer) clearTimeout(schedTimer);
-      if (master && ctx) {
-        master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.6);
-        setTimeout(() => { try { ctx.close(); } catch (_) {} ctx = null; }, 800);
-      }
+      setTimeout(() => { try { ctx && ctx.close(); } catch (_) {} ctx = master = null; }, 1400);
     }
+
+    /* ---- file (mp3) path with manual volume fade ---- */
+    function fadeFile(target, dur, after) {
+      clearInterval(fileFade);
+      const start = audioEl.volume, t0 = performance.now();
+      fileFade = setInterval(() => {
+        const k = Math.min(1, (performance.now() - t0) / (dur * 1000));
+        audioEl.volume = Math.max(0, Math.min(1, start + (target - start) * k));
+        if (k >= 1) { clearInterval(fileFade); if (after) after(); }
+      }, 40);
+    }
+
     function setBtn(on) {
       btn.classList.toggle("playing", on);
+      btn.querySelector(".music-icon").textContent = on ? "❚❚" : "♪";
       btn.title = on ? "Pause music" : "Play music";
-      btn.setAttribute("aria-label", on ? "Pause background music" : "Play background music");
+      btn.setAttribute("aria-label", on ? "Pause music" : "Play music");
+      dock.classList.toggle("open", on);
+    }
+    function setMuteBtn() {
+      if (!muteBtn) return;
+      const off = muted || userVol === 0;
+      muteBtn.textContent = off ? "🔇" : "🔊";
+      muteBtn.title = off ? "Unmute" : "Mute";
+      muteBtn.setAttribute("aria-label", off ? "Unmute music" : "Mute music");
     }
 
     function start() {
       if (playing) return;
-      audioEl.volume = 0.45;
+      dock.classList.add("open");
+      audioEl.volume = 0;
       audioEl.play()
-        .then(() => { usingFile = true; playing = true; setBtn(true); })
-        .catch(() => { startSynth(); });   // no file → synth
+        .then(() => { usingFile = true; playing = true; setBtn(true); fadeFile(muted ? 0 : userVol, 1.4); })
+        .catch(() => { startSynth(); });                            // no file → synth
     }
     function stop() {
-      if (usingFile) audioEl.pause(); else stopSynth();
+      if (!playing) return;
+      if (usingFile) fadeFile(0, 1.0, () => audioEl.pause()); else stopSynth();
       playing = false; usingFile = false; setBtn(false);
     }
+    function toggleMute() {
+      muted = !muted;
+      if (usingFile) fadeFile(muted ? 0 : userVol, 0.4); else applyGain(0.4);
+      setMuteBtn();
+    }
+    function setVolume(v) {
+      userVol = Math.max(0, Math.min(1, v));
+      if (userVol > 0 && muted) muted = false;
+      if (!muted) { if (usingFile) audioEl.volume = userVol; else applyGain(0.15); }
+      setMuteBtn();
+    }
+
     btn.addEventListener("click", () => playing ? stop() : start());
+    muteBtn && muteBtn.addEventListener("click", toggleMute);
+    volEl && volEl.addEventListener("input", e => setVolume(e.target.value / 100));
+    if (volEl) userVol = volEl.value / 100;
+    setMuteBtn();
     return { start, stop };
   })();
 
@@ -251,7 +323,7 @@
      WHATSAPP SHARE
      ========================================================= */
   const shareUrl = "https://wa.me/?text=" + encodeURIComponent(
-    "You're invited to Sajil ❤️ Jino's wedding on 02 July 2026 at Holy Family Church, Nagercoil! View the invitation: " + SITE_URL);
+    "You're invited to Sajil ❤️ Jino's Engagement Ceremony on 01 July 2026 at St. Antony's Community Hall, Nagercoil! View the invitation: " + SITE_URL);
   if ($("#shareWhatsApp")) $("#shareWhatsApp").href = shareUrl;
   if ($("#footerShare"))   $("#footerShare").href   = shareUrl;
   if ($("#shareCardWA"))   $("#shareCardWA").addEventListener("click", () => window.open(shareUrl, "_blank", "noopener"));
@@ -260,10 +332,10 @@
      ADD TO CALENDAR  (Google Calendar template)
      ========================================================= */
   function calUrl() {
-    const start = "20260702T050000Z";          // 10:30 IST
-    const end   = "20260702T070000Z";          // 12:30 IST
-    const text  = "Sajil ❤️ Jino — Holy Matrimony";
-    const det   = "With the blessings of our parents, join us for the Nuptial Mass of Sajil & Jino. #SajilWedsJino";
+    const start = "20260701T050000Z";          // 10:30 IST
+    const end   = "20260701T070000Z";          // 12:30 IST
+    const text  = "Sajil ❤️ Jino — Engagement Ceremony";
+    const det   = "With the blessings of our parents, join us for the Engagement Ceremony of Sajil & Jino. #SajilWedsJino";
     return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
       "&text=" + encodeURIComponent(text) +
       "&dates=" + start + "/" + end +
@@ -276,53 +348,43 @@
 
 
   /* =========================================================
-     WEDDING WISHES (localStorage)
+     WEDDING WISHES  — private: emailed to the couple, not shown
      ========================================================= */
-  const wishForm = $("#wishForm"), wishList = $("#wishList"), KEY = "sajiljino_wishes_v2";
-  const esc = s => { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; };
-  function renderWishes(w){
-    wishList.innerHTML = "";
-    w.slice().reverse().forEach(x => {
-      const el = document.createElement("div"); el.className = "wish";
-      el.innerHTML = `<div class="wish-head"><div class="wish-avatar">${esc((x.name[0]||"?").toUpperCase())}</div>`+
-        `<span class="wish-name">${esc(x.name)}</span></div><p class="wish-msg">${esc(x.msg)}</p>`;
-      wishList.appendChild(el);
-    });
+  const wishForm = $("#wishForm"), wishSuccess = $("#wishSuccess"), wishSubmit = $("#wishSubmit");
+  const WISH_TO  = "rashwinxavier6@gmail.com";
+  const WISH_ENDPOINT = "https://formsubmit.co/ajax/" + WISH_TO;
+
+  function showWishSuccess() {
+    if (wishForm) { wishForm.hidden = true; wishForm.classList.add("sent"); }
+    if (wishSuccess) { wishSuccess.hidden = false; wishSuccess.classList.add("in"); }
   }
-  function loadWishes(){
-    let w = [];
-    try { w = JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) {}
-    if (!w.length) w = [
-      { name:"Aunty Mary",   msg:"Wishing you a lifetime of love and God's abundant blessings! 🙏" },
-      { name:"Rahul",        msg:"So happy for you both. Congratulations on your big day! ❤️" },
-      { name:"Priya Thomas", msg:"May God shower you with joy, peace and endless love. God bless! ✝️" },
-    ];
-    renderWishes(w);
+  function mailtoFallback(name, msg) {
+    const subject = encodeURIComponent("New Wedding Wish — Sajil & Jino");
+    const body    = encodeURIComponent("From: " + name + "\n\n" + msg + "\n\n—\nSent from the wedding invitation website.");
+    const a = document.createElement("a");
+    a.href = "mailto:" + WISH_TO + "?subject=" + subject + "&body=" + body;
+    a.style.display = "none";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
-  wishForm.addEventListener("submit", e => {
+
+  wishForm && wishForm.addEventListener("submit", e => {
     e.preventDefault();
     const name = $("#wishName").value.trim(), msg = $("#wishMsg").value.trim();
     if (!name || !msg) return;
-    let w = []; try { w = JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) {}
-    w.push({ name, msg });
-    localStorage.setItem(KEY, JSON.stringify(w));
-    renderWishes(w); wishForm.reset();
-    /* notify the couple via email */
-    const subject = encodeURIComponent("Wedding Wish from " + name + " — #SajilWedsJino");
-    const body    = encodeURIComponent("From: " + name + "\n\n" + msg + "\n\n—\nSent from the wedding invitation website.");
-    const a = document.createElement("a");
-    a.href = "mailto:sajiljino.wedding@gmail.com?subject=" + subject + "&body=" + body;
-    a.style.display = "none";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    /* brief confirmation toast */
-    const toast = document.createElement("div");
-    toast.textContent = "✓ Wish sent! Your blessing means the world to them.";
-    toast.style.cssText = "position:fixed;bottom:max(90px,calc(20px + env(safe-area-inset-bottom)));left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7a1f2b,#5a1620);color:#e6c66b;padding:12px 22px;border-radius:30px;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:500;letter-spacing:.5px;box-shadow:0 10px 28px -8px rgba(90,22,32,.6);z-index:9999;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .4s";
-    document.body.appendChild(toast);
-    requestAnimationFrame(() => { toast.style.opacity = "1"; setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => toast.remove(), 400); }, 3200); });
+    wishSubmit.classList.add("sending"); wishSubmit.textContent = "Sending…";
+
+    fetch(WISH_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        message: msg,
+        _subject: "New Wedding Wish for Sajil & Jino",
+        _template: "box"
+      })
+    })
+      .then(r => { if (!r.ok) throw new Error("send failed"); showWishSuccess(); })
+      .catch(() => { mailtoFallback(name, msg); showWishSuccess(); });
   });
-  loadWishes();
 
 })();
