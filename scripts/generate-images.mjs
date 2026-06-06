@@ -65,7 +65,7 @@ const ogSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
   <!-- cross emblem -->
   <g transform="translate(600,128)">
     <circle r="34" fill="none" stroke="url(#goldgrad)" stroke-width="1.5" opacity="0.7"/>
-    <text x="0" y="16" text-anchor="middle" font-family="Playfair Display, serif" font-size="46" fill="url(#goldgrad)">✚</text>
+    <text x="0" y="16" text-anchor="middle" font-family="Playfair Display, serif" font-size="46" fill="url(#goldgrad)">✝</text>
   </g>
   <text x="600" y="208" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="30" letter-spacing="7" fill="${GOLD_L}">TOGETHER WITH OUR FAMILIES</text>
   <!-- names -->
@@ -136,7 +136,7 @@ const cardSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="13
   <g transform="translate(540,210)">
     <circle r="48" fill="none" stroke="url(#cgold)" stroke-width="2" opacity="0.85"/>
     <circle r="38" fill="none" stroke="url(#cgold)" stroke-width="1" opacity="0.5"/>
-    <text x="0" y="22" text-anchor="middle" font-family="Playfair Display, serif" font-size="64" fill="url(#cgold)">✚</text>
+    <text x="0" y="22" text-anchor="middle" font-family="Playfair Display, serif" font-size="64" fill="url(#cgold)">✝</text>
   </g>
 
   <text x="540" y="330" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="34" letter-spacing="10" fill="${GOLD_D}">SAVE THE DATE</text>
