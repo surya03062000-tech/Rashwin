@@ -181,117 +181,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .gate-btn-icon{font-size:1.2rem}
 
 /* ============================================================
-   CINEMATIC JOURNEY  (≈15s: space → Earth → real map → church
-   doors open → couple walks out → date)  — natural / photographic
+   INTRO VIDEO  (plays full-screen when the invitation is opened)
    ============================================================ */
-.journey{position:fixed;inset:0;z-index:9400;display:none;overflow:hidden;background:#060a1c}
+.journey{position:fixed;inset:0;z-index:9400;display:none;overflow:hidden;background:#000}
 .journey.run{display:block}
 .journey.done{opacity:0;visibility:hidden;transition:opacity .8s ease,visibility .8s ease}
-.journey>div{position:absolute;inset:0}
-
-/* -- Stage 1: deep space + realistic Earth, zooming in -- */
-.j-space{background:radial-gradient(circle at 50% 42%,#1a2c5a 0%,#0a1430 45%,#04060f 100%);opacity:0}
-.journey.run .j-space{animation:jSpace 15s ease forwards}
-@keyframes jSpace{0%{opacity:0}4%{opacity:1}24%{opacity:1}30%{opacity:0}100%{opacity:0}}
-.j-stars span{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;box-shadow:0 0 4px #fff;animation:jTwinkle 2.8s ease-in-out infinite}
-@keyframes jTwinkle{0%,100%{opacity:.15}50%{opacity:1}}
-.j-earth{position:absolute;top:48%;left:50%;width:min(78vmin,520px);height:min(78vmin,520px);border-radius:50%;overflow:hidden;opacity:0;
-  background:
-    radial-gradient(circle at 30% 28%,rgba(255,255,255,.35),transparent 26%),
-    radial-gradient(circle at 50% 50%,#3d86c6 0%,#246199 45%,#123f72 72%,#0a2c54 100%);
-  box-shadow:inset -34px -30px 90px rgba(0,0,0,.6),inset 18px 16px 50px rgba(140,200,255,.25);
-  transform:translate(-50%,-50%) scale(.4)}
-.journey.run .j-earth{animation:jEarth 15s cubic-bezier(.55,0,.35,1) forwards}
-@keyframes jEarth{0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}6%{opacity:1}22%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}30%{opacity:0;transform:translate(-50%,-50%) scale(2.6)}100%{opacity:0}}
-.j-earth::before{content:"";position:absolute;inset:0;border-radius:50%;animation:jSpin 30s linear infinite;
-  background:
-    radial-gradient(closest-side at 26% 34%,#3f9d52 0 9%,transparent 11%),
-    radial-gradient(closest-side at 56% 28%,#357f45 0 7%,transparent 9%),
-    radial-gradient(closest-side at 68% 60%,#3f9d52 0 13%,transparent 15%),
-    radial-gradient(closest-side at 40% 72%,#357f45 0 9%,transparent 11%),
-    radial-gradient(closest-side at 82% 44%,#46a85b 0 6%,transparent 8%)}
-.j-earth-clouds{position:absolute;inset:0;border-radius:50%;opacity:.75;animation:jSpin 46s linear infinite reverse;
-  background:
-    radial-gradient(closest-side at 44% 40%,rgba(255,255,255,.55) 0 6%,transparent 9%),
-    radial-gradient(closest-side at 72% 56%,rgba(255,255,255,.45) 0 7%,transparent 10%),
-    radial-gradient(closest-side at 30% 64%,rgba(255,255,255,.4) 0 5%,transparent 8%)}
-.j-earth-glow{position:absolute;inset:-7%;border-radius:50%;box-shadow:0 0 70px 14px rgba(120,180,255,.4)}
-@keyframes jSpin{to{transform:rotate(360deg)}}
-.j-caption{position:absolute;left:0;right:0;bottom:16%;text-align:center;color:#e7eeff;font-family:var(--garamond);
-  font-size:clamp(1rem,3.2vw,1.5rem);letter-spacing:2px;opacity:0;padding:0 24px}
-.journey.run .j-cap1{animation:jCap 15s ease forwards}
-@keyframes jCap{0%,6%{opacity:0}13%{opacity:1}23%{opacity:1}29%{opacity:0}100%{opacity:0}}
-
-/* -- Stage 2: real map zooming to the church location -- */
-.j-map{opacity:0;overflow:hidden}
-.journey.run .j-map{animation:jMap 15s ease forwards}
-@keyframes jMap{0%,23%{opacity:0}30%{opacity:1}52%{opacity:1}58%{opacity:0}100%{opacity:0}}
-.j-mapimg{position:absolute;inset:-8%;transform:scale(1);
-  background:
-    url('https://staticmap.openstreetmap.de/staticmap.php?center=8.1899,77.4137&zoom=14&size=900x700&maptype=mapnik') center/cover no-repeat,
-    linear-gradient(135deg,#e7eedd,#cfe0ef);}
-.journey.run .j-mapimg{animation:jMapZoom 15s cubic-bezier(.45,0,.4,1) forwards}
-@keyframes jMapZoom{0%,23%{transform:scale(1)}30%{transform:scale(1.15)}58%{transform:scale(2.1)}100%{transform:scale(2.1)}}
-.j-pinwrap{position:absolute;top:46%;left:50%;transform:translate(-50%,-100%);z-index:2;text-align:center}
-.j-pin{font-size:54px;line-height:1;opacity:0;transform:translateY(-130px);filter:drop-shadow(0 6px 6px rgba(0,0,0,.3))}
-.journey.run .j-pin{animation:jPin 15s cubic-bezier(.5,0,.2,1) forwards}
-@keyframes jPin{0%,33%{opacity:0;transform:translateY(-130px)}40%{opacity:1;transform:translateY(0)}44%{transform:translateY(-16px)}48%{transform:translateY(0)}54%{opacity:1}58%{opacity:0}100%{opacity:0}}
-.j-pulse{width:16px;height:16px;border-radius:50%;background:rgba(122,31,43,.55);margin:2px auto 0;opacity:0}
-.journey.run .j-pulse{animation:jPulse 15s ease forwards}
-@keyframes jPulse{0%,40%{opacity:0;transform:scale(.4)}46%{opacity:.7}56%{opacity:0;transform:scale(3)}100%{opacity:0}}
-.j-place{position:absolute;left:0;right:0;bottom:13%;text-align:center;font-family:var(--serif);color:#7a1f2b;
-  font-size:clamp(1.3rem,4.6vw,2.1rem);line-height:1.2;opacity:0;text-shadow:0 2px 10px rgba(255,255,255,.85)}
-.j-place small{display:block;font-family:var(--garamond);font-size:.6em;color:#5a4a40;letter-spacing:3px;margin-top:4px}
-.journey.run .j-place{animation:jPlace 15s ease forwards}
-@keyframes jPlace{0%,40%{opacity:0}46%{opacity:1}52%{opacity:1}58%{opacity:0}100%{opacity:0}}
-
-/* -- Stage 3: arrive at church · doors open · couple walks out -- */
-.j-church{opacity:0;overflow:hidden;background:linear-gradient(180deg,#fbe6c6 0%,#f3d3b0 55%,#e7c09c 100%)}
-.journey.run .j-church{animation:jChurch 15s ease forwards}
-@keyframes jChurch{0%,50%{opacity:0}57%{opacity:1}100%{opacity:1}}
-.j-churchimg{position:absolute;inset:0;transform:scale(1.3);
-  background:url('assets/church.jpg') center/cover no-repeat}
-.journey.run .j-churchimg{animation:jChurchZoom 15s cubic-bezier(.45,0,.4,1) forwards}
-@keyframes jChurchZoom{0%,52%{transform:scale(1.35)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
-.j-glow{position:absolute;top:54%;left:50%;width:52vmax;height:52vmax;border-radius:50%;opacity:0;z-index:2;
-  background:radial-gradient(circle,rgba(255,246,214,.95),rgba(255,226,150,.3) 45%,transparent 70%);
-  transform:translate(-50%,-50%) scale(.2)}
-.journey.run .j-glow{animation:jGlow 15s ease forwards}
-@keyframes jGlow{0%,62%{opacity:0;transform:translate(-50%,-50%) scale(.2)}78%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:.85;transform:translate(-50%,-50%) scale(1.08)}}
-.j-doors{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:min(46vw,210px);height:min(44vh,290px);perspective:1000px;z-index:3;display:flex;opacity:0}
-.journey.run .j-doors{animation:jDoorsShow 15s ease forwards}
-@keyframes jDoorsShow{0%,52%{opacity:0}58%{opacity:1}92%{opacity:1}97%{opacity:0}100%{opacity:0}}
-.j-door{position:relative;width:50%;height:100%;background:linear-gradient(180deg,#7a4a22,#4e2f15);border:2px solid #c9a227;display:flex;justify-content:center;backface-visibility:hidden}
-.j-door i{color:rgba(230,198,107,.75);font-size:1.5rem;margin-top:16px;font-style:normal}
-.j-door-l{transform-origin:left center;border-radius:120px 4px 4px 120px;box-shadow:inset -16px 0 30px rgba(0,0,0,.4)}
-.j-door-r{transform-origin:right center;border-radius:4px 120px 120px 4px;box-shadow:inset 16px 0 30px rgba(0,0,0,.4)}
-.journey.run .j-door-l{animation:jDoorL 15s cubic-bezier(.6,0,.3,1) forwards}
-.journey.run .j-door-r{animation:jDoorR 15s cubic-bezier(.6,0,.3,1) forwards}
-@keyframes jDoorL{0%,62%{transform:rotateY(0)}78%,100%{transform:rotateY(-118deg)}}
-@keyframes jDoorR{0%,62%{transform:rotateY(0)}78%,100%{transform:rotateY(118deg)}}
-.j-couple{position:absolute;top:53%;left:50%;width:min(44vw,210px);height:min(60vh,360px);z-index:4;opacity:0;
-  background:url('assets/couple.jpeg') center bottom/contain no-repeat,url('assets/hero.jpg') center/cover no-repeat;
-  filter:drop-shadow(0 18px 36px rgba(0,0,0,.5));transform:translate(-50%,-44%) scale(.45)}
-.journey.run .j-couple{animation:jCoupleWalk 15s cubic-bezier(.4,0,.3,1) forwards}
-@keyframes jCoupleWalk{0%,66%{opacity:0;transform:translate(-50%,-42%) scale(.4)}74%{opacity:1}86%{opacity:1;transform:translate(-50%,-46%) scale(1)}96%{opacity:1}100%{opacity:0}}
-
-/* -- Stage 4: date / time -- */
-.j-date{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:0 24px;opacity:0;z-index:6;
-  background:linear-gradient(180deg,rgba(255,248,237,0),rgba(255,248,237,.6) 56%,rgba(255,248,237,.92))}
-.journey.run .j-date{animation:jDate 15s ease forwards}
-@keyframes jDate{0%,82%{opacity:0}90%{opacity:1}100%{opacity:1}}
-.j-date-pre{font-family:var(--garamond);letter-spacing:3px;text-transform:uppercase;color:var(--gold-deep);font-size:clamp(.78rem,2.5vw,1rem)}
-.j-date-cross{color:var(--gold);font-size:1.6rem}
-.j-date-names{font-family:var(--script);font-size:clamp(2.4rem,9vw,4rem);color:var(--maroon);line-height:1.1}
-.j-date-names i{color:var(--heart);font-style:normal}
-.j-date-event{font-family:var(--garamond);letter-spacing:2px;text-transform:uppercase;color:var(--ink);margin-top:6px}
-.j-date-big{font-family:var(--serif);font-weight:700;font-size:clamp(1.4rem,5vw,2.4rem);color:var(--maroon)}
-.j-date-sub{font-family:var(--garamond);color:var(--muted);font-size:clamp(.92rem,2.7vw,1.12rem)}
-
-.j-skip{position:absolute;right:max(16px,var(--sar));bottom:max(16px,var(--sab));z-index:10;cursor:pointer;
-  background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.55);color:#fff;font-family:var(--sans);
-  font-size:.8rem;letter-spacing:1px;padding:9px 18px;border-radius:30px;backdrop-filter:blur(6px);min-height:40px}
-.j-skip:hover{background:rgba(0,0,0,.5)}
+.intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+/* soft fade along the bottom — blends the clip in and hides any corner watermark */
+.intro-fade{position:absolute;left:0;right:0;bottom:0;height:16%;z-index:2;pointer-events:none;
+  background:linear-gradient(to top,#000 0%,rgba(0,0,0,.6) 45%,transparent 100%)}
+.intro-fade::after{content:"";position:absolute;right:0;bottom:0;width:42%;height:300%;
+  background:linear-gradient(to top left,#000 0%,rgba(0,0,0,.55) 40%,transparent 75%)}
+.j-skip{position:absolute;right:max(16px,var(--sar));bottom:max(20px,var(--sab));z-index:10;cursor:pointer;
+  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.6);color:#fff;font-family:var(--sans);
+  font-size:.82rem;letter-spacing:1px;padding:10px 20px;border-radius:30px;backdrop-filter:blur(6px);min-height:42px}
+.j-skip:hover{background:rgba(0,0,0,.6)}
 
 /* ============ PETALS ============ */
 .petals{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
@@ -555,6 +459,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 /* ============ ENGAGEMENT CARD ============ */
 .engagement-wrap{display:flex;justify-content:center}
+.engagement-wrap.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,28px);max-width:880px;margin:0 auto;align-items:stretch}
+.engagement-wrap.two .engagement-card{max-width:none;width:100%}
+@media (max-width:760px){.engagement-wrap.two{grid-template-columns:1fr;max-width:460px}}
 .engagement-card{position:relative;max-width:560px;width:100%;text-align:center;
   background:linear-gradient(165deg,rgba(255,255,255,.92),rgba(253,243,224,.9));
   border:1px solid rgba(201,162,39,.4);border-radius:26px;
