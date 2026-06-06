@@ -269,7 +269,8 @@
 
     /* Plays assets/music.mp3 (add your "Hosanna — Vinnaithaandi Varuvaaya"
        track there). Until the file exists, a gentle synth fallback plays. */
-    const MUSIC_FILE = "assets/music.mp3";
+    const MUSIC_FILE = "assets/music.mp4";
+    const MUSIC_LIMIT_MS = 10000;                                    // play only the first 10s
 
     let ctx, master, lp, perc, playing = false, muted = false, usingFile = false,
         schedTimer = null, step = 0, nextTime = 0, fadeLevel = 0;
@@ -398,26 +399,33 @@
       muteBtn.setAttribute("aria-label", muted ? "Unmute music" : "Mute music");
     }
 
+    let limitTimer = null;
+    function armLimit() {                                            // auto-stop after 10s
+      clearTimeout(limitTimer);
+      if (MUSIC_LIMIT_MS) limitTimer = setTimeout(() => { if (playing) stop(); }, MUSIC_LIMIT_MS);
+    }
     function start() {
       if (playing) return;
       dock.classList.add("open");
       primeCtx();                                                   // unlock audio in the gesture
       if (MUSIC_FILE) {                                             // real track if provided
-        audioEl.volume = 0;
+        audioEl.loop = false; audioEl.currentTime = 0; audioEl.volume = 0;
         const p = audioEl.play();
         if (p && p.then) {
           p.then(() => {
             usingFile = true; playing = true; setBtn(true);
             teardownCtx();                                          // don't need the synth
-            fadeFile(muted ? 0 : userVol, 1.4);
-          }).catch(() => runSynth());                               // no file → synth (ctx already primed)
-        } else { runSynth(); }
+            fadeFile(muted ? 0 : userVol, 1.2);
+            armLimit();
+          }).catch(() => { runSynth(); armLimit(); });              // no file → synth
+        } else { runSynth(); armLimit(); }
       } else {
-        runSynth();
+        runSynth(); armLimit();
       }
     }
     function stop() {
       if (!playing) return;
+      clearTimeout(limitTimer);
       if (usingFile) fadeFile(0, 1.0, () => audioEl.pause()); else stopSynth();
       playing = false; usingFile = false; setBtn(false);
     }
