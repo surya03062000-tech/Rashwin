@@ -45,9 +45,12 @@ const VENUE_QUERY  = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
 ```
 
 - **Hero photo** → drop your image at **`assets/hero.jpg`** (used as the hero backdrop).
-- **Couple photo** → drop the engagement portrait at **`assets/couple.jpg`** — it
-  is revealed walking out of the church in the cinematic intro. Until added, the
-  hero image stands in.
+- **Couple photo** → drop the portrait at **`assets/couple.jpg`** — shown in the
+  Welcome section and revealed walking out of the church in the cinematic intro.
+  Until added, the hero image stands in.
+- **Church photo** → drop a photo of Holy Family Church at **`assets/church.jpg`**
+  — used as the "arrival" backdrop in the intro. The intro also shows a live
+  OpenStreetMap of Ramanputhur, Nagercoil (loads in the browser).
 - **Music** → save your audio as **`assets/music.mp3`** (e.g. *Hosanna*). Please
   use a track you have the rights to; copyrighted songs are not bundled here.
 - Names, dates, events, family, Tamil text → edit `index.html`.
