@@ -242,7 +242,7 @@
     es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),
     { threshold:0.1, rootMargin:"0px 0px -40px 0px" }
   );
-  $$(".reveal").forEach(el => io.observe(el));
+  $$(".reveal, .reveal-scale").forEach(el => io.observe(el));
 
   /* confetti / flower-shower when the engagement card appears */
   const ecard = $(".engagement-card");
@@ -333,11 +333,13 @@
       master.gain.linearRampToValueAtTime(Math.max(0.0001, v), ctx.currentTime + (dur || 0.3));
     }
 
-    function startSynth() {
+    /* build + unlock the AudioContext — MUST run inside the click gesture */
+    function primeCtx() {
+      if (ctx) { if (ctx.state === "suspended") ctx.resume(); return; }
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
       ctx = new AC();
-      if (ctx.state === "suspended") ctx.resume();                  // ← key fix: unlock on gesture
+      if (ctx.state === "suspended") ctx.resume();
       master = ctx.createGain(); master.gain.value = 0.0001;
       lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2300;
       perc = ctx.createGain(); perc.gain.value = 1;                 // percussion bus (dry)
@@ -348,15 +350,25 @@
       lp.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(master);
       perc.connect(master);
       master.connect(ctx.destination);
+    }
+    function runSynth() {
+      primeCtx();
+      if (!ctx) return;
+      if (ctx.state === "suspended") ctx.resume();
       step = 0; nextTime = ctx.currentTime + 0.12;
       scheduler();
       fadeLevel = 1; applyGain(2.0);                                 // smooth fade-in
       usingFile = false; playing = true; setBtn(true);
     }
+    function teardownCtx() {
+      if (schedTimer) clearTimeout(schedTimer);
+      try { ctx && ctx.close(); } catch (_) {}
+      ctx = master = perc = null;
+    }
     function stopSynth() {
       fadeLevel = 0; applyGain(1.2);                                 // smooth fade-out
       if (schedTimer) clearTimeout(schedTimer);
-      setTimeout(() => { try { ctx && ctx.close(); } catch (_) {} ctx = master = perc = null; }, 1400);
+      setTimeout(teardownCtx, 1400);
     }
 
     /* ---- file (mp3) path with manual volume fade ---- */
@@ -388,13 +400,19 @@
     function start() {
       if (playing) return;
       dock.classList.add("open");
-      if (MUSIC_FILE) {                                              // real track if provided
+      primeCtx();                                                   // unlock audio in the gesture
+      if (MUSIC_FILE) {                                             // real track if provided
         audioEl.volume = 0;
-        audioEl.play()
-          .then(() => { usingFile = true; playing = true; setBtn(true); fadeFile(muted ? 0 : userVol, 1.4); })
-          .catch(() => startSynth());
+        const p = audioEl.play();
+        if (p && p.then) {
+          p.then(() => {
+            usingFile = true; playing = true; setBtn(true);
+            teardownCtx();                                          // don't need the synth
+            fadeFile(muted ? 0 : userVol, 1.4);
+          }).catch(() => runSynth());                               // no file → synth (ctx already primed)
+        } else { runSynth(); }
       } else {
-        startSynth();                                               // synth runs in the gesture
+        runSynth();
       }
     }
     function stop() {

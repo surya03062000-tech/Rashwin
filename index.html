@@ -114,47 +114,35 @@
   <!-- ===== Cinematic Journey (space → map → church → couple → date) ===== -->
   <div class="journey" id="journey" aria-hidden="true">
     <!-- Stage 1: space + earth -->
+    <!-- Stage 1: deep space → Earth (zooming toward India) -->
     <div class="j-space">
       <div class="j-stars" id="jStars"></div>
-      <div class="j-globe"><span class="j-land"></span></div>
-      <p class="j-caption j-cap1">Somewhere in God's beautiful world…</p>
-    </div>
-
-    <!-- Stage 2: map + location pin -->
-    <div class="j-map">
-      <svg class="j-mapart" viewBox="0 0 400 300" aria-hidden="true">
-        <defs><radialGradient id="jland" cx="50%" cy="45%" r="70%">
-          <stop offset="0%" stop-color="#dff0d6"/><stop offset="100%" stop-color="#bcdca6"/></radialGradient></defs>
-        <rect width="400" height="300" fill="#cfe6f7"/>
-        <path d="M40 180 Q70 110 140 120 Q200 90 250 130 Q330 120 360 190 Q330 260 250 250 Q180 280 120 250 Q60 250 40 180 Z" fill="url(#jland)" stroke="#9cc47e" stroke-width="2"/>
-        <path d="M150 150 Q200 160 250 150" stroke="#a9d0ff" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.7"/>
-        <circle cx="232" cy="196" r="4" fill="#7a1f2b"/>
-      </svg>
-      <div class="j-pin" aria-hidden="true">📍</div>
-      <p class="j-place">Ramanputhur · Nagercoil</p>
-    </div>
-
-    <!-- Stage 3: church with opening doors + couple -->
-    <div class="j-church">
-      <div class="j-light" aria-hidden="true"></div>
-      <svg class="j-churchart" viewBox="0 0 300 320" aria-hidden="true">
-        <g fill="#f3e4c8" stroke="#c9a227" stroke-width="2">
-          <rect x="70" y="150" width="160" height="160"/>
-          <polygon points="70,150 150,80 230,150"/>
-          <rect x="142" y="36" width="16" height="40"/>
-          <rect x="134" y="50" width="32" height="10"/>
-          <polygon points="120,150 150,120 180,150" fill="#e7d2a6"/>
-        </g>
-        <g fill="#fff4dc" stroke="#c9a227" stroke-width="2">
-          <rect x="92" y="170" width="34" height="60" rx="17"/>
-          <rect x="174" y="170" width="34" height="60" rx="17"/>
-        </g>
-      </svg>
-      <div class="j-doors" aria-hidden="true">
-        <span class="j-door j-door-l"></span>
-        <span class="j-door j-door-r"></span>
+      <div class="j-earth" aria-hidden="true">
+        <span class="j-earth-clouds"></span>
+        <span class="j-earth-glow"></span>
       </div>
-      <div class="j-couple" aria-hidden="true"></div>
+      <p class="j-caption j-cap1">From across the world…</p>
+    </div>
+
+    <!-- Stage 2: real map zooming to the church location -->
+    <div class="j-map">
+      <div class="j-mapimg" id="jMapImg" aria-hidden="true"></div>
+      <div class="j-pinwrap" aria-hidden="true">
+        <div class="j-pin">📍</div>
+        <div class="j-pulse"></div>
+      </div>
+      <p class="j-place">Holy Family Church<br><small>Ramanputhur · Nagercoil</small></p>
+    </div>
+
+    <!-- Stage 3: arrive at the church · doors open · couple walks out -->
+    <div class="j-church">
+      <div class="j-churchimg" id="jChurchImg" aria-hidden="true"></div>
+      <div class="j-glow" aria-hidden="true"></div>
+      <div class="j-doors" aria-hidden="true">
+        <span class="j-door j-door-l"><i>✚</i></span>
+        <span class="j-door j-door-r"><i>✚</i></span>
+      </div>
+      <div class="j-couple" id="jCouple" aria-hidden="true"></div>
     </div>
 
     <!-- Stage 4: date / time reveal -->
@@ -275,6 +263,11 @@
         </p>
         <p class="lead-tamil">கடவுளின் அருளோடும், எங்கள் பெற்றோரின் ஆசீர்வாதத்தோடும், எங்கள் திருமண நல்வாழ்வில் பங்கேற்க உங்களை அன்புடன் அழைக்கிறோம்.</p>
         <h3 class="couple-line">Sajil &amp; Gino</h3>
+        <figure class="couple-photo reveal-scale">
+          <img src="assets/couple.jpg" alt="Sajil and Gino" loading="lazy"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80'" />
+          <figcaption>Sajil &amp; Gino</figcaption>
+        </figure>
         <div class="welcome-meta">
           <div><strong>When</strong><span>Thursday, 02 July 2026 · 10:30 AM</span></div>
           <div class="divider-dot" aria-hidden="true"></div>
@@ -461,13 +454,11 @@
     <p class="footer-tamil">உங்கள் வருகையை எதிர்பார்க்கிறோம் · நன்றி 🙏</p>
     <p class="footer-hashtag">#SajilWedsGino</p>
     <div class="footer-contact">
-      <a href="tel:+919876543210">📞 +91 98765 43210</a>
-      <a href="mailto:sajiljino.wedding@gmail.com">✉ sajiljino.wedding@gmail.com</a>
+      <a href="tel:+919944002502">📞 +91 99440 02502</a>
+      <a href="tel:+918925732112">📞 +91 89257 32112</a>
     </div>
     <div class="footer-social">
-      <a href="#" aria-label="Instagram" target="_blank" rel="noopener">Instagram</a>
-      <a href="#" aria-label="Facebook" target="_blank" rel="noopener">Facebook</a>
-      <a id="footerShare" aria-label="Share on WhatsApp" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="footerShare" class="footer-wa" aria-label="Share on WhatsApp" target="_blank" rel="noopener">Share on WhatsApp</a>
     </div>
     <p class="footer-date">02 · 07 · 2026 · Holy Family Church, Ramanputhur, Nagercoil</p>
     <p class="footer-credit">Made with ❤️ for our special day</p>
