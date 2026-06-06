@@ -232,11 +232,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 /* ============ HERO ============ */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--ivory);overflow:hidden}
-/* Hero backdrop = your attached photo (assets/hero.jpg).
+/* Hero backdrop = your attached photo (assets/hero.jpeg).
    Until that file exists, the Unsplash layer underneath shows through. */
 .hero-bg{position:absolute;inset:-6%;z-index:0;
   background:
-    url('assets/hero.jpg') center/cover no-repeat,
+    url('assets/hero.jpeg') center/cover no-repeat,
     url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
   animation:kenBurns 24s ease-in-out infinite alternate;will-change:transform}
 @keyframes kenBurns{0%{transform:scale(1) translate(0,0)}33%{transform:scale(1.07) translate(-1.5%,1%)}66%{transform:scale(1.05) translate(1.5%,-1%)}100%{transform:scale(1.1) translate(-.5%,.5%)}}
@@ -397,6 +397,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .venue-qr{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-top:4px}
 .venue-qr img{border-radius:10px;border:1px solid rgba(201,162,39,.35);padding:4px;background:#fff;box-shadow:0 4px 14px -6px rgba(0,0,0,.2)}
 .venue-qr-label{font-family:var(--garamond);font-size:.88rem;color:var(--muted);letter-spacing:1px}
+@media (max-width:760px){
+  .venue-info{text-align:center;align-items:center}
+  .venue-info .btn-primary{width:100%;max-width:300px;text-align:center}
+  .venue-qr{align-items:center;margin-top:8px}
+  .venue-map{min-height:240px}
+  .venue-map iframe{min-height:240px}
+}
 
 /* ============ GALLERY + LIGHTBOX ============ */
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(140px,22vw,220px),1fr));gap:clamp(8px,1.5vw,14px)}
