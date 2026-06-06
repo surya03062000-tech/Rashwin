@@ -44,7 +44,6 @@
   openBtn.addEventListener("click", () => {
     const r = openBtn.getBoundingClientRect();
     burstSparkles(r.left + r.width / 2, r.top + r.height / 2);
-    Music.start();                 // begin music on user gesture
     const hideGate = () => {
       gate.classList.add("hide");
       setTimeout(() => { gate.style.display = "none"; }, 600);
@@ -52,43 +51,45 @@
     if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) {
       gate.classList.add("opening");
       setTimeout(hideGate, 600);
+      Music.start();
     } else {
-      Journey.run(hideGate);       // cinematic ~15s, then reveal the site
+      // play the intro video, then reveal the site + start music
+      Journey.run(() => { hideGate(); Music.start(); });
     }
   });
 
   /* =========================================================
-     CINEMATIC JOURNEY  (space → map → church doors → couple → date)
+     INTRO VIDEO  (plays once when the invitation is opened)
      ========================================================= */
   const Journey = (function () {
     const el = $("#journey");
+    const vid = $("#introVideo");
     let done = false, timer = null;
     function finish(cb) {
       if (done) return; done = true;
       if (timer) clearTimeout(timer);
-      if (cb) cb();                                  // hide the gate underneath
+      try { vid && vid.pause(); } catch (_) {}
       el.classList.add("done");
+      if (cb) cb();
       setTimeout(() => { el.style.display = "none"; }, 850);
     }
     function run(cb) {
-      if (!el) { if (cb) cb(); return; }
-      const sky = $("#jStars");
-      if (sky && !sky.childElementCount) {           // sprinkle stars once
-        for (let i = 0; i < 80; i++) {
-          const s = document.createElement("span");
-          s.style.left = Math.random() * 100 + "%";
-          s.style.top = Math.random() * 100 + "%";
-          s.style.animationDelay = (Math.random() * 2.6).toFixed(2) + "s";
-          s.style.opacity = (0.3 + Math.random() * 0.7).toFixed(2);
-          sky.appendChild(s);
-        }
-      }
+      if (!el || !vid) { if (cb) cb(); return; }
       el.style.display = "block";
-      void el.offsetWidth;                           // reflow so animations start at 0
-      el.classList.add("run");
       const skip = $("#journeySkip");
       skip && skip.addEventListener("click", () => finish(cb), { once: true });
-      timer = setTimeout(() => finish(cb), 14600);
+      vid.onended = () => finish(cb);
+      vid.currentTime = 0;
+      const p = vid.play();
+      if (p && p.catch) {
+        p.catch(() => {                       // sound blocked → retry muted
+          vid.muted = true;
+          const p2 = vid.play();
+          if (p2 && p2.catch) p2.catch(() => finish(cb));   // can't play at all → skip
+        });
+      }
+      // safety net: never hang longer than 30s even if 'ended' never fires
+      timer = setTimeout(() => finish(cb), 30000);
     }
     return { run };
   })();

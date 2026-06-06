@@ -111,50 +111,12 @@
     </div>
   </div>
 
-  <!-- ===== Cinematic Journey (space → map → church → couple → date) ===== -->
+  <!-- ===== Intro video (plays when the invitation is opened) ===== -->
   <div class="journey" id="journey" aria-hidden="true">
-    <!-- Stage 1: space + earth -->
-    <!-- Stage 1: deep space → Earth (zooming toward India) -->
-    <div class="j-space">
-      <div class="j-stars" id="jStars"></div>
-      <div class="j-earth" aria-hidden="true">
-        <span class="j-earth-clouds"></span>
-        <span class="j-earth-glow"></span>
-      </div>
-      <p class="j-caption j-cap1">From across the world…</p>
-    </div>
-
-    <!-- Stage 2: real map zooming to the church location -->
-    <div class="j-map">
-      <div class="j-mapimg" id="jMapImg" aria-hidden="true"></div>
-      <div class="j-pinwrap" aria-hidden="true">
-        <div class="j-pin">📍</div>
-        <div class="j-pulse"></div>
-      </div>
-      <p class="j-place">Holy Family Church<br><small>Ramanputhur · Nagercoil</small></p>
-    </div>
-
-    <!-- Stage 3: arrive at the church · doors open · couple walks out -->
-    <div class="j-church">
-      <div class="j-churchimg" id="jChurchImg" aria-hidden="true"></div>
-      <div class="j-glow" aria-hidden="true"></div>
-      <div class="j-doors" aria-hidden="true">
-        <span class="j-door j-door-l"><i>✚</i></span>
-        <span class="j-door j-door-r"><i>✚</i></span>
-      </div>
-      <div class="j-couple" id="jCouple" aria-hidden="true"></div>
-    </div>
-
-    <!-- Stage 4: date / time reveal -->
-    <div class="j-date">
-      <span class="j-date-pre">Together with our families</span>
-      <span class="j-date-cross" aria-hidden="true">✚</span>
-      <h2 class="j-date-names">Sajil <i>❤</i> Gino</h2>
-      <p class="j-date-event">Holy Matrimony</p>
-      <p class="j-date-big">Thursday · 02 July 2026</p>
-      <p class="j-date-sub">10:30 AM · Holy Family Church, Ramanputhur, Nagercoil</p>
-    </div>
-
+    <video class="intro-video" id="introVideo" playsinline preload="auto">
+      <source src="assets/intro.mp4" type="video/mp4" />
+    </video>
+    <div class="intro-fade" aria-hidden="true"></div>
     <button class="j-skip" id="journeySkip" aria-label="Skip intro">Skip ›</button>
   </div>
 
