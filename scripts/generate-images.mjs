@@ -71,10 +71,10 @@ const ogSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
   <!-- names -->
   <text x="320" y="430" text-anchor="middle" font-family="Great Vibes, cursive" font-size="96" fill="${IVORY}">Sajil</text>
   <text x="600" y="438" text-anchor="middle" font-family="Playfair Display, serif" font-size="60" fill="#FF0000">❤</text>
-  <text x="880" y="430" text-anchor="middle" font-family="Great Vibes, cursive" font-size="96" fill="${IVORY}">Jino</text>
+  <text x="880" y="430" text-anchor="middle" font-family="Great Vibes, cursive" font-size="96" fill="${IVORY}">Gino</text>
   ${sprig(600,470,120)}
-  <text x="600" y="528" text-anchor="middle" font-family="Playfair Display, serif" font-weight="600" font-size="40" letter-spacing="8" fill="${IVORY}">01 · 07 · 2026  ·  WEDNESDAY</text>
-  <text x="600" y="568" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="26" letter-spacing="3" fill="${GOLD_L}">St. Antony's Community Hall · Nagercoil · 10:30 AM</text>
+  <text x="600" y="528" text-anchor="middle" font-family="Playfair Display, serif" font-weight="600" font-size="40" letter-spacing="8" fill="${IVORY}">02 · 07 · 2026  ·  THURSDAY</text>
+  <text x="600" y="568" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="26" letter-spacing="3" fill="${GOLD_L}">Holy Family Church · Ramanputhur, Nagercoil · 10:30 AM</text>
 </svg>`;
 
 /* fix: remove the empty/duplicate big name line above (kept layout clean) */
@@ -142,20 +142,20 @@ const cardSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="13
   <text x="540" y="330" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="34" letter-spacing="10" fill="${GOLD_D}">SAVE THE DATE</text>
   ${cSprig(540,378,150)}
 
-  <text x="540" y="470" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="30" letter-spacing="4" fill="${INK_SOFT}">Engagement Ceremony</text>
+  <text x="540" y="470" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="30" letter-spacing="4" fill="${INK_SOFT}">The Holy Matrimony</text>
 
   <text x="540" y="640" text-anchor="middle" font-family="Great Vibes, cursive" font-size="160" fill="${MAROON_INK}">Sajil</text>
   <text x="540" y="740" text-anchor="middle" font-family="Playfair Display, serif" font-size="80" fill="#FF0000">❤</text>
-  <text x="540" y="880" text-anchor="middle" font-family="Great Vibes, cursive" font-size="160" fill="${MAROON_INK}">Jino</text>
+  <text x="540" y="880" text-anchor="middle" font-family="Great Vibes, cursive" font-size="160" fill="${MAROON_INK}">Gino</text>
 
   ${cSprig(540,960,170)}
 
-  <text x="540" y="1070" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="74" letter-spacing="10" fill="url(#cgold)">01 · 07 · 2026</text>
-  <text x="540" y="1130" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="36" letter-spacing="8" fill="${INK_SOFT}">WEDNESDAY · 10:30 AM</text>
+  <text x="540" y="1070" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="74" letter-spacing="10" fill="url(#cgold)">02 · 07 · 2026</text>
+  <text x="540" y="1130" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="36" letter-spacing="8" fill="${INK_SOFT}">THURSDAY · 10:30 AM</text>
 
   <line x1="290" y1="1180" x2="790" y2="1180" stroke="url(#cgold)" stroke-width="1" opacity="0.55"/>
-  <text x="540" y="1230" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="34" fill="${GOLD_D}">St. Antony's Community Hall</text>
-  <text x="540" y="1272" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="27" letter-spacing="2" fill="${INK_SOFT}">Kurusady · Nagercoil</text>
+  <text x="540" y="1230" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="34" fill="${GOLD_D}">Holy Family Church</text>
+  <text x="540" y="1272" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="27" letter-spacing="2" fill="${INK_SOFT}">Carmel Nagar · Ramanputhur · Nagercoil</text>
 </svg>`;
 
 await sharp(Buffer.from(cardSvg)).png().toFile("assets/save-the-date.png");

@@ -1,5 +1,5 @@
 /* =========================================================
-   Sajil ❤️ Jino — Wedding Invitation · interactions  v3
+   Sajil ❤️ Gino — Wedding Invitation · interactions  v3
    3D gate · synth Christian music · add-to-calendar ·
    save-the-date share · Tamil · gallery · wishes
    ========================================================= */
@@ -7,10 +7,10 @@
   "use strict";
 
   /* ----- Config ----- */
-  const WEDDING_DATE  = new Date("2026-07-01T10:30:00+05:30");
+  const WEDDING_DATE  = new Date("2026-07-02T10:30:00+05:30");
   const SITE_URL      = window.location.href;
-  const VENUE_QUERY   = "St Antony's Community Hall Kurusady Nagercoil";
-  const VENUE_FULL    = "St. Antony's Community Hall, Kurusady, Nagercoil, Tamil Nadu";
+  const VENUE_QUERY   = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
+  const VENUE_FULL    = "Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil, Tamil Nadu";
 
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -44,13 +44,54 @@
   openBtn.addEventListener("click", () => {
     const r = openBtn.getBoundingClientRect();
     burstSparkles(r.left + r.width / 2, r.top + r.height / 2);
-    gate.classList.add("opening");
     Music.start();                 // begin music on user gesture
-    setTimeout(() => {
+    const hideGate = () => {
       gate.classList.add("hide");
       setTimeout(() => { gate.style.display = "none"; }, 600);
-    }, 1350);
+    };
+    if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) {
+      gate.classList.add("opening");
+      setTimeout(hideGate, 600);
+    } else {
+      Journey.run(hideGate);       // cinematic ~15s, then reveal the site
+    }
   });
+
+  /* =========================================================
+     CINEMATIC JOURNEY  (space → map → church doors → couple → date)
+     ========================================================= */
+  const Journey = (function () {
+    const el = $("#journey");
+    let done = false, timer = null;
+    function finish(cb) {
+      if (done) return; done = true;
+      if (timer) clearTimeout(timer);
+      if (cb) cb();                                  // hide the gate underneath
+      el.classList.add("done");
+      setTimeout(() => { el.style.display = "none"; }, 850);
+    }
+    function run(cb) {
+      if (!el) { if (cb) cb(); return; }
+      const sky = $("#jStars");
+      if (sky && !sky.childElementCount) {           // sprinkle stars once
+        for (let i = 0; i < 80; i++) {
+          const s = document.createElement("span");
+          s.style.left = Math.random() * 100 + "%";
+          s.style.top = Math.random() * 100 + "%";
+          s.style.animationDelay = (Math.random() * 2.6).toFixed(2) + "s";
+          s.style.opacity = (0.3 + Math.random() * 0.7).toFixed(2);
+          sky.appendChild(s);
+        }
+      }
+      el.style.display = "block";
+      void el.offsetWidth;                           // reflow so animations start at 0
+      el.classList.add("run");
+      const skip = $("#journeySkip");
+      skip && skip.addEventListener("click", () => finish(cb), { once: true });
+      timer = setTimeout(() => finish(cb), 14600);
+    }
+    return { run };
+  })();
 
   function burstSparkles(cx, cy) {
     if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
@@ -171,7 +212,7 @@
   const pad = n => String(n).padStart(2,"0");
   function celebrate() {
     $("#countdown").innerHTML =
-      '<p style="font-family:Great Vibes,cursive;font-size:clamp(1.6rem,6vw,2.6rem);color:#fff;text-align:center">We are engaged! 🎉 God bless us!</p>';
+      '<p style="font-family:Great Vibes,cursive;font-size:clamp(1.6rem,6vw,2.6rem);color:#fff;text-align:center">We are married! 🎉 God bless us!</p>';
     /* a joyful repeating flower-shower */
     flowerShower(60, 3200);
     let bursts = 0;
@@ -225,8 +266,9 @@
     const dock  = $("#musicDock");
     const muteBtn = $("#muteToggle");
 
-    /* If you add a real Tamil instrumental, set MUSIC_FILE = "assets/music.mp3" */
-    const MUSIC_FILE = "";
+    /* Plays assets/music.mp3 (add your "Hosanna — Vinnaithaandi Varuvaaya"
+       track there). Until the file exists, a gentle synth fallback plays. */
+    const MUSIC_FILE = "assets/music.mp3";
 
     let ctx, master, lp, perc, playing = false, muted = false, usingFile = false,
         schedTimer = null, step = 0, nextTime = 0, fadeLevel = 0;
@@ -382,14 +424,15 @@
      WHATSAPP SHARE
      ========================================================= */
   const shareMsg =
-    "💍✨ *Sajil ❤️ Jino* ✨💍\n" +
+    "💍✨ *Sajil ❤️ Gino* ✨💍\n" +
     "_With the blessings of our families_\n\n" +
-    "You are warmly invited to our *Engagement Ceremony* 🌸\n\n" +
-    "📅 Wednesday, 01 July 2026\n" +
-    "⏰ 10:30 AM\n" +
-    "⛪ St. Antony's Community Hall, Kurusady, Nagercoil\n\n" +
+    "You are warmly invited to our wedding celebrations 🌸\n\n" +
+    "💍 *Engagement* — Wed, 01 July 2026 · 10:30 AM\n" +
+    "    St. Antony's Community Hall, Kurusady, Nagercoil\n\n" +
+    "⛪ *Holy Matrimony* — Thu, 02 July 2026 · 10:30 AM\n" +
+    "    Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil\n\n" +
     "🤍 Your presence & blessings will make our day complete.\n\n" +
-    "💌 View the full invitation:\n" + SITE_URL + "\n\n#SajilWedsJino";
+    "💌 View the full invitation:\n" + SITE_URL + "\n\n#SajilWedsGino";
   const shareUrl = "https://wa.me/?text=" + encodeURIComponent(shareMsg);
   if ($("#shareWhatsApp")) $("#shareWhatsApp").href = shareUrl;
   if ($("#footerShare"))   $("#footerShare").href   = shareUrl;
@@ -399,10 +442,10 @@
      ADD TO CALENDAR  (Google Calendar template)
      ========================================================= */
   function calUrl() {
-    const start = "20260701T050000Z";          // 10:30 IST
-    const end   = "20260701T070000Z";          // 12:30 IST
-    const text  = "Sajil ❤️ Jino — Engagement Ceremony";
-    const det   = "With the blessings of our parents, join us for the Engagement Ceremony of Sajil & Jino. #SajilWedsJino";
+    const start = "20260702T050000Z";          // 10:30 IST
+    const end   = "20260702T070000Z";          // 12:30 IST
+    const text  = "Sajil ❤️ Gino — Holy Matrimony";
+    const det   = "With the blessings of our parents, join us for the Holy Matrimony of Sajil & Gino. Engagement: 01 July 2026, St. Antony's Community Hall, Kurusady. #SajilWedsGino";
     return "https://calendar.google.com/calendar/render?action=TEMPLATE" +
       "&text=" + encodeURIComponent(text) +
       "&dates=" + start + "/" + end +
@@ -439,7 +482,7 @@
     if (wishSuccess) { wishSuccess.hidden = false; wishSuccess.classList.add("in"); }
   }
   function mailtoFallback(name, msg) {
-    const subject = encodeURIComponent("New Wedding Wish — Sajil & Jino");
+    const subject = encodeURIComponent("New Wedding Wish — Sajil & Gino");
     const body    = encodeURIComponent("From: " + name + "\n\n" + msg + "\n\n—\nSent from the wedding invitation website.");
     const a = document.createElement("a");
     a.href = "mailto:" + WISH_TO + "?subject=" + subject + "&body=" + body;
@@ -450,7 +493,7 @@
     return fetch(WISH_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({ name, message: msg, _subject: "New Wedding Wish for Sajil & Jino", _template: "box" })
+      body: JSON.stringify({ name, message: msg, _subject: "New Wedding Wish for Sajil & Gino", _template: "box" })
     }).then(r => { if (!r.ok) throw new Error("send failed"); });
   }
 
@@ -463,7 +506,7 @@
     const send = emailjsReady()
       ? window.emailjs.send(EMAILJS.serviceId, EMAILJS.templateId, {
           from_name: name, message: msg, to_email: WISH_TO,
-          subject: "New Wedding Wish for Sajil & Jino"
+          subject: "New Wedding Wish for Sajil & Gino"
         })
       : sendViaFormSubmit(name, msg);
 

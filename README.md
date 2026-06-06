@@ -1,23 +1,26 @@
-# Sajil ❤️ Jino — Engagement Invitation Website
+# Sajil ❤️ Gino — Wedding Invitation Website
 
-A premium, mobile-first digital invitation for the Christian engagement of
-**Sajil & Jino**, celebrating their Engagement Ceremony on **Wednesday, 01 July 2026**
-at **St. Antony's Community Hall, Kurusady, Nagercoil**.
+A premium, mobile-first digital invitation for the Christian wedding of
+**Sajil & Gino** — Engagement on **01 July 2026** (St. Antony's Community Hall,
+Kurusady) and the **Holy Matrimony** on **Thursday, 02 July 2026** at
+**Holy Family Church, Carmel Nagar, Ramanputhur, Nagercoil**.
 
 Fast, SEO-friendly static site (HTML · CSS · vanilla JS) — no build step — ready
 to deploy to **Vercel**.
 
 ## ✨ Features
 
-- **Cinematic 3D entrance** — loader → invitation card with a wax seal → twin
-  doors swing open in 3D with radiant light-rays and a golden sparkle burst
+- **Light-themed entrance** — loader → invitation card with a wax seal →
+  golden sparkle burst on "Open Invitation"
+- **~15s cinematic journey** when the invitation is opened: from space → spinning
+  Earth → a map pin at Ramanputhur, Nagercoil → the church with doors opening →
+  the couple revealed → the wedding date & time (Skip button included)
 - **Bilingual** — elegant Tamil (Noto Serif Tamil) alongside English throughout
-- **Live countdown** to the ceremony (01 Jul 2026, 10:30 AM IST) in a luxury Cinzel face
-- **Background music** — an elegant Tamil/Indian *Mangala Vadyam* (Mohanam raga +
-  soft thavil beat) synthesised via the Web Audio API (no file needed) with
-  play/pause, mute and smooth fade-in/out. To use a real recording, set
-  `MUSIC_FILE = "assets/music.mp3"` in `script.js` and drop the file in.
-- **Confetti / flower-shower** when the engagement card appears and a full
+- **Live countdown** to the Holy Matrimony (02 Jul 2026, 10:30 AM IST) in a luxury Cinzel face
+- **Background music** — plays `assets/music.mp3` (drop in your *Hosanna —
+  Vinnaithaandi Varuvaaya* track); a gentle synth plays until the file is added.
+  Play/pause + mute + smooth fade-in/out.
+- **Confetti / flower-shower** when the events card appears and a full
   celebration once the countdown reaches the big day
 - **Save the Date** section — premium gold/cream/white card, downloadable + WhatsApp share
 - **Add to Calendar** — one tap adds the ceremony to Google Calendar
@@ -37,13 +40,16 @@ to deploy to **Vercel**.
 Editable details live at the top of `script.js`:
 
 ```js
-const WEDDING_DATE = new Date("2026-07-01T10:30:00+05:30");
-const VENUE_QUERY  = "St Antony's Community Hall Kurusady Nagercoil";
+const WEDDING_DATE = new Date("2026-07-02T10:30:00+05:30");
+const VENUE_QUERY  = "Holy Family Church Carmel Nagar Ramanputhur Nagercoil";
 ```
 
-- **Hero photo** → drop your image at **`assets/hero.jpg`**. It is used as the
-  hero backdrop *and* revealed behind the 3D doors as they open. Until you add
-  it, a stock image shows in its place.
+- **Hero photo** → drop your image at **`assets/hero.jpg`** (used as the hero backdrop).
+- **Couple photo** → drop the engagement portrait at **`assets/couple.jpg`** — it
+  is revealed walking out of the church in the cinematic intro. Until added, the
+  hero image stands in.
+- **Music** → save your audio as **`assets/music.mp3`** (e.g. *Hosanna*). Please
+  use a track you have the rights to; copyrighted songs are not bundled here.
 - Names, dates, events, family, Tamil text → edit `index.html`.
 - **Wishes email** → works out-of-the-box via FormSubmit (the owner confirms a
   one-time activation email). For EmailJS instead, fill `EMAILJS` keys in `script.js`.
@@ -83,4 +89,4 @@ Zero-config static site.
     └── music.mp3                  # (optional — synth plays if absent)
 ```
 
-Made with ❤️ for Sajil & Jino · #SajilWedsJino
+Made with ❤️ for Sajil & Gino · #SajilWedsGino
