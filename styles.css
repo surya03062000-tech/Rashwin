@@ -48,7 +48,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* ============ TAMIL TEXT ACCENTS ============ */
 .tamil-kicker{font-family:var(--tamil);color:var(--gold-deep);font-size:clamp(1.1rem,3.5vw,1.5rem);font-weight:500;margin-bottom:2px}
 .lead-tamil{font-family:var(--tamil);color:var(--muted);font-size:clamp(.95rem,2.6vw,1.12rem);max-width:640px;margin:10px auto 4px;line-height:2}
-.hero-tamil{font-family:var(--tamil);color:var(--gold-deep);font-size:clamp(.86rem,2.4vw,1.05rem);max-width:600px;margin:6px auto 0;line-height:1.9;text-shadow:0 1px 8px rgba(255,255,255,.7)}
+.hero-tamil{font-family:var(--tamil);color:var(--maroon);font-size:clamp(.9rem,2.5vw,1.08rem);max-width:600px;margin:6px auto 0;line-height:1.9;text-shadow:0 1px 7px rgba(255,255,255,.95)}
 .footer-tamil{font-family:var(--tamil);color:var(--gold-light);font-size:clamp(.95rem,2.6vw,1.1rem);margin:6px 0 4px}
 
 /* ============ LOADER (light theme) ============ */
@@ -252,16 +252,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .hero-cross-ring{position:absolute;top:clamp(60px,8vw,100px);left:50%;transform:translateX(-50%);opacity:.7;animation:spin-slow 30s linear infinite}
 @keyframes spin-slow{to{transform:translateX(-50%) rotate(360deg)}}
 .hero-content{position:relative;z-index:3;padding:max(80px,calc(var(--sat)+70px)) clamp(16px,5vw,40px) clamp(40px,6vw,60px);max-width:940px;width:100%}
-.hero-pre{font-family:var(--garamond);font-size:clamp(.85rem,2.5vw,1.1rem);letter-spacing:3px;text-transform:uppercase;color:var(--gold-deep);margin-bottom:10px}
+.hero-pre{font-family:var(--garamond);font-size:clamp(.85rem,2.5vw,1.1rem);letter-spacing:3px;text-transform:uppercase;color:var(--maroon);margin-bottom:10px;text-shadow:0 1px 6px rgba(255,255,255,.9)}
 .hero-names{font-family:var(--script);font-weight:400;line-height:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(8px,3vw,20px)}
 .hero-name{font-size:clamp(2.8rem,12vw,7rem);color:var(--maroon);text-shadow:0 2px 18px rgba(255,255,255,.7)}
 .hero-heart{font-size:clamp(1.8rem,7vw,3.4rem);color:var(--heart);text-shadow:0 0 18px rgba(255,0,0,.35);animation:beat 1.6s ease-in-out infinite}
 .hero-divider{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0}
 .hero-divider span:first-child,.hero-divider span:last-child{height:1px;width:clamp(40px,8vw,80px);background:linear-gradient(90deg,transparent,var(--gold-deep),transparent)}
 .hero-divider span:nth-child(2){color:var(--gold-deep);font-size:.9rem}
-.hero-verse{font-family:var(--garamond);font-style:italic;font-size:clamp(.88rem,2.5vw,1.05rem);color:var(--ink);margin:0 auto 8px;max-width:580px;line-height:1.7;text-shadow:0 1px 8px rgba(255,255,255,.7)}
+.hero-verse{font-family:var(--garamond);font-style:italic;font-size:clamp(.92rem,2.6vw,1.1rem);color:var(--maroon-deep);margin:0 auto 8px;max-width:580px;line-height:1.7;text-shadow:0 1px 7px rgba(255,255,255,.95)}
 .hero-date{display:flex;flex-direction:column;gap:4px;margin:16px 0 24px;font-family:var(--garamond)}
-.hero-date span{letter-spacing:4px;text-transform:uppercase;font-size:clamp(.78rem,2vw,.9rem);color:var(--gold-deep)}
+.hero-date span{letter-spacing:4px;text-transform:uppercase;font-size:clamp(.78rem,2vw,.9rem);color:var(--maroon);font-weight:500;text-shadow:0 1px 6px rgba(255,255,255,.9)}
 .hero-date strong{font-family:var(--serif);font-size:clamp(1.4rem,5vw,2.6rem);letter-spacing:clamp(3px,2vw,6px);color:var(--maroon)}
 .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .hero-actions .btn-ghost{color:var(--maroon);border-color:rgba(122,31,43,.45);background:rgba(255,255,255,.4)}
